@@ -83,7 +83,7 @@ namespace ShiftWorld
             cameraPos = new Vector2(width, map[mapIndex].Height * map[mapIndex].TileHeight / 2);
             camera.Pos = new Vector2((int)cameraPos.X, (int)cameraPos.Y);
             camera.Zoom = 0.5f;
-            player.SetPosition(cameraPos);
+            player.Position = cameraPos;
         }
 
         /// <summary>
