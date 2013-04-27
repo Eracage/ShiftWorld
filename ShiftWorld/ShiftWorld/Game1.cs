@@ -27,6 +27,7 @@ namespace ShiftWorld
 
         Rectangle mapView;
         List<Map> map;
+        int mapIndex = 0;
         Camera2d camera = new Camera2d();
 
         Player player;
@@ -51,7 +52,7 @@ namespace ShiftWorld
         {
             map = new List<Map>();
 
-
+            camera.Pos = new Vector2(width/2, height/2);
 
 
 
@@ -108,6 +109,7 @@ namespace ShiftWorld
             // TODO: Add your update logic here
             keyboardState = Keyboard.GetState();
 
+            camera._pos.X += (float)(gameTime.ElapsedGameTime.TotalMilliseconds/1000.0f) ;
 
 
 
@@ -140,12 +142,7 @@ namespace ShiftWorld
                         null,
                         camera.get_transformation(GraphicsDevice /*Send the variable that has your graphic device here*/));
 
-            DrawLayer(spriteBatch, map[0], 0, ref mapView, 0.1f);
-            DrawLayer(spriteBatch, map[0], 1, ref mapView, 0.2f);
-            DrawLayer(spriteBatch, map[0], 2, ref mapView, 0.3f);
-            DrawLayer(spriteBatch, map[0], 3, ref mapView, 0.4f);
-
-
+            DrawMapLayers(spriteBatch, mapIndex);
 
             player.Draw(spriteBatch);
 
@@ -156,6 +153,14 @@ namespace ShiftWorld
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        public void DrawMapLayers(SpriteBatch spriteBatch, int mapIndex)
+        {
+            for (int i = 0; i < map[0].TileLayers.Count; ++i)
+            {
+                DrawLayer(spriteBatch, map[mapIndex], i, ref mapView, 0.1f - 0.001f * i);
+            }
         }
 
         public void DrawLayer(SpriteBatch spriteBatch, Map map, Int32 layerID, ref Rectangle region, Single layerDepth)

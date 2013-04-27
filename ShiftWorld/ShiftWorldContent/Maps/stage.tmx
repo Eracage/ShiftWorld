@@ -21,6 +21,9 @@
   </data>
  </layer>
  <layer name="ovet" width="100" height="100">
+  <properties>
+   <property name="Visible" value="true"/>
+  </properties>
   <data encoding="base64" compression="zlib">
    eJzt2sENgzAMBVD2LlvQhbiwAxdmaTpARCWnjZO+J/kUCXGIpW/DsgDAdxyl9sA5bV2lzsA5APzKo9Ta+yWS6pGvtlLPxs+chXz1n2p9Zr7po9Zn+g8AuCO/5TJafnN/chnt/sDsovtd++G2ovtd+2EAevP/WS6+jwIQZe7Pxdz/ObkzF7mTN32Zi74EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGB2L5IvL2E=
   </data>
@@ -72,7 +75,7 @@
    eJzt11F2gyAQBdB0/6vqzvrV0zaVMMAgYu49xx/FGfQlqJ8fj8fniduzrDqrZc33e+zRedGaLeMi+6JzvpKj68/O47lubS7RXrV9PXVWa/0djoyVR91OedSeH63kIY+anfJ41Use/8eOvmNmv+/2jFlt1zyyMrtaPjutV1m5jlzDbPJou4bZdspjtI48fo61/K4jveRRrxN9jkZqZKxrPeetZr36e3y1Gf+Pkedp5tZTfzV5XG/LyiN6n+9q9vXJo80uefweI4+x+plj5TFev3UukXXrrq6WR2SMPMbqt87FNvY+23vuKjvfy8waV8npjN6la6zdy1IdeYz3yMgjWjd6fKT3LPLo6z2LPPp6z5LRu7b2ZuRxVEMe5Rqz83jVt+V45Pn9Lnm0vhtF+/YeH+k9y1l5zJiXPM7rMfLtMPot8Q55rNwiczn7npScmUd0/+y+kfNWkcfxeau0vg/1rNe9eWQ8B+RRrhfdX5pHz7Xd4fnRep97c4rMLXJ+adxd/x+RGvLIceU8omp5ZKy5Z7l7HrvJmPPqPF7NazfyuJaRNXaHDQAAAAAAAAAAAAAAAAAAAAAAAAAA4AspcSHy
   </data>
  </layer>
- <layer name="huoneet" width="100" height="100" visible="0" opacity="0.63">
+ <layer name="huoneet" width="100" height="100" opacity="0.46">
   <data encoding="base64" compression="zlib">
    eJzt20uOwjAQRVG8/11BQ3/UwJYY9aSlopzESipwjvSmGfiOLMXHdjgcO3ZKduncf19t3qq5tufr1dNCj5wetehRix616FGLHrXoUcuoHh+tb1mPc+e+k0Xn/5Nsa3rosUaP6Pt66DGFHnroEdNDDz1io3p8tr5lPfa+7DyXTg899jw9ak2PWtOj1vSoNT1qrUqPtfy2dRbdQyPZ/fRv2XnfZm4reuihR0wPPfSI6aGHHjE93rPHVHro8U497htNDz30eP0ec/9v10MPPaa//9Cjjx566BEb1aFqj70Z2UKP5UZ10GOMkS30AAAAAAAAAAAAAAAAAAAAAAAAAAAAKnoAvgsdIg==
   </data>
