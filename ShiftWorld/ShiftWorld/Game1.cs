@@ -24,6 +24,7 @@ namespace ShiftWorld
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         KeyboardState keyboardState;
+        MouseState mouseState;
 
         Rectangle mapView;
         List<Map> map;
@@ -109,6 +110,7 @@ namespace ShiftWorld
 
             // TODO: Add your update logic here
             keyboardState = Keyboard.GetState();
+            mouseState = Mouse.GetState();
 
             Vector2 cameraDelta = new Vector2((float)(gameTime.ElapsedGameTime.TotalMilliseconds/1000.0f) * 200,0);
             //cameraPos += cameraDelta;
@@ -121,12 +123,17 @@ namespace ShiftWorld
 
 
             
-            player.Update(keyboardState, gameTime, cameraDelta);
+            player.Update(keyboardState, gameTime, cameraDelta, cameraPos);
+
+            if (player.HP() < 0 || player.Position.Y > (map[mapIndex].Height * map[mapIndex].TileHeight - player.Height))
+            {
+                this.Exit();
+            }
 
 
 
 
-            HitBoxes();
+            HitBoxes(gameTime);
 
             base.Update(gameTime);
         }
@@ -230,12 +237,12 @@ namespace ShiftWorld
             }
         }
 
-        private void HitBoxes()
+        private void HitBoxes(GameTime gameTime)
         {
 
             for (int i = 0; i < 3; i++)
             {
-                float leftBox = 96, rightBox = 224, topBox = 0, botBox = 256;
+                float leftBox = 96, rightBox = 192, topBox = 0, botBox = 256;
                 float widthDif = (rightBox - leftBox) / 2.2f;
                 float heightDif = (botBox - topBox) / 4f;
                 float midWidht = (rightBox + leftBox) / 2 - widthDif;
@@ -279,6 +286,12 @@ namespace ShiftWorld
                         map[mapIndex].TileLayers[0].Tiles[TileIndexX][TileIndexY].Target.X -
                         map[mapIndex].TileWidth / 2 - rightBox
                         , player.Position.Y);
+
+                    player.HP((float)-gameTime.ElapsedGameTime.TotalMilliseconds);
+                }
+                else
+                {
+                    player.HP(5);
                 }
 
                 TileIndexX = (int)(player.Position.X + leftBox) / map[mapIndex].TileWidth;

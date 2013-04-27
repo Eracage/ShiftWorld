@@ -15,14 +15,17 @@ namespace ShiftWorld
 {
     class Player
     {
-        private Vector2 _position;
         private Animate _animator;
+        private Vector2 _position;
+        private Vector2 _cameraPos;
         private Vector2 _velocity = Vector2.Zero;
         private float _speed = 100;
+        private float _hp = 500;
         private float _jumpDelayms = 0;
         private bool _jumping = false;
         private bool _inAir = true;
         private bool _zenithReached = false;
+
 
         
 
@@ -32,8 +35,10 @@ namespace ShiftWorld
             _position = new Vector2(10,10);
         }
 
-        public void Update(KeyboardState keyboardState, GameTime gameTime, Vector2 cameraDelta)
+        public void Update(KeyboardState keyboardState, GameTime gameTime, Vector2 cameraDelta, Vector2 cameraPosition)
         {
+            _cameraPos = cameraPosition;
+
             movement(keyboardState, gameTime);
 
             _animator.Update(gameTime);
@@ -43,6 +48,19 @@ namespace ShiftWorld
         {
             _animator.Draw(spriteBatch, _position);
         }
+
+        public void Land()
+        {
+            _velocity.Y = 0;
+            if (_inAir)
+            {
+                _inAir = false;
+                _animator.ChangeAnimation(9, 16, 10, 10f);
+                _animator.AnimationTransition(5, 5, 3, 15);
+            }
+        }
+
+        // Getters setters
 
         public Vector2 Position
         {
@@ -56,16 +74,19 @@ namespace ShiftWorld
             set { _velocity = value; }
         }
 
-        public void Land()
+        public float HP(float change = 0.0f)
         {
-            _velocity.Y = 0;
-            if (_inAir)
-            {
-                _inAir = false;
-                _animator.ChangeAnimation(9, 16, 10, 10f);
-                _animator.AnimationTransition(5, 5, 3, 15);
-            }
+            _hp += change;
+            if (_hp > 500) _hp = 500;
+            return _hp;
         }
+
+        public float Height
+        {
+            get { return 256; }
+        }
+
+        // Private functions
 
         private void movement(KeyboardState keyboardState, GameTime gameTime)
         {
