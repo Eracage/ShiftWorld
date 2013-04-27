@@ -29,6 +29,7 @@ namespace ShiftWorld
         List<Map> map;
         int mapIndex = 0;
         Camera2d camera = new Camera2d();
+        Vector2 cameraPos;
 
         Player player;
 
@@ -52,7 +53,8 @@ namespace ShiftWorld
         {
             map = new List<Map>();
 
-            camera.Pos = new Vector2(width/2, height/2);
+            cameraPos = new Vector2(width / 2, height / 2);
+            camera.Pos = new Vector2((int)cameraPos.X, (int)cameraPos.Y);
 
 
 
@@ -109,13 +111,15 @@ namespace ShiftWorld
             // TODO: Add your update logic here
             keyboardState = Keyboard.GetState();
 
-            camera._pos.X += (float)(gameTime.ElapsedGameTime.TotalMilliseconds/1000.0f) ;
+            Vector2 cameraDelta = new Vector2((float)(gameTime.ElapsedGameTime.TotalMilliseconds/1000.0f)*50,0);
+            cameraPos += cameraDelta;
+            camera.Pos = new Vector2(cameraPos.X, cameraPos.Y);
 
 
 
 
-
-            player.Update(keyboardState);
+            
+            player.Update(keyboardState, gameTime, cameraDelta);
 
 
 
