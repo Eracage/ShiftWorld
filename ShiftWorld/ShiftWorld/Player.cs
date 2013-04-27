@@ -25,6 +25,7 @@ namespace ShiftWorld
         private bool _jumping = false;
         private bool _inAir = true;
         private bool _zenithReached = false;
+        private bool _alive = true;
 
 
         
@@ -57,7 +58,18 @@ namespace ShiftWorld
                 _inAir = false;
                 _animator.ChangeAnimation(9, 16, 10, 10f);
                 _animator.AnimationTransition(5, 5, 3, 15);
+                _alive = true;
             }
+        }
+
+        public void Die()
+        {
+            if (_alive)
+            {
+                _animator.ChangeAnimation(23, 23, 1, 1);
+                _animator.AnimationTransition(20, 20, 4, 6);
+            }
+            _alive = false;
         }
 
         // Getters setters
