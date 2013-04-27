@@ -8,6 +8,8 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using FuncWorks.XNA.XTiled;
+using System.Text;
 
 namespace ShiftWorld
 {
@@ -18,7 +20,10 @@ namespace ShiftWorld
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        KeyboardState keyboardState;
+
+        Rectangle mapView;
+        Map map;
+        Player player;
 
         public Game1()
         {
@@ -38,6 +43,8 @@ namespace ShiftWorld
 
 
             base.Initialize();
+
+            mapView = graphics.GraphicsDevice.Viewport.Bounds;
         }
 
         /// <summary>
@@ -50,6 +57,10 @@ namespace ShiftWorld
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+
+            player = new Player(Content.Load<Texture2D>("character size"));
+
+            //map = Content.Load<Map>("");
         }
 
         /// <summary>
@@ -86,6 +97,11 @@ namespace ShiftWorld
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
+
+            player.Draw(spriteBatch);
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
