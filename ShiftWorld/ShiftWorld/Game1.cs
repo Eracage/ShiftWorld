@@ -30,6 +30,8 @@ namespace ShiftWorld
         int mapIndex = 0;
         Camera2d camera = new Camera2d();
         Vector2 cameraPos;
+        int dontUseThisTileIndexX;
+        int dontUseThisTileIndexY;
 
         Player player;
 
@@ -82,8 +84,7 @@ namespace ShiftWorld
 
             cameraPos = new Vector2(width, map[mapIndex].Height * map[mapIndex].TileHeight / 2);
             camera.Pos = new Vector2((int)cameraPos.X, (int)cameraPos.Y);
-            camera.Zoom = 0.5f;
-            player.Position = cameraPos;
+            camera.Zoom = 1f;
         }
 
         /// <summary>
@@ -110,7 +111,8 @@ namespace ShiftWorld
             keyboardState = Keyboard.GetState();
 
             Vector2 cameraDelta = new Vector2((float)(gameTime.ElapsedGameTime.TotalMilliseconds/1000.0f) * 200,0);
-            cameraPos += cameraDelta;
+            //cameraPos += cameraDelta;
+            cameraPos = player.Position;
 
             //camera.Pos = new Vector2(cameraPos.X, cameraPos.Y);
             camera.Pos = new Vector2((int)cameraPos.X, cameraPos.Y);
@@ -124,6 +126,7 @@ namespace ShiftWorld
 
 
 
+            HitBoxes();
 
             base.Update(gameTime);
         }
@@ -225,6 +228,82 @@ namespace ShiftWorld
                     }
                 }
             }
+        }
+
+        private void HitBoxes()
+        {
+
+            for (int i = 0; i < 3; i++)
+            {
+                float leftBox = 96, rightBox = 224, topBox = 0, botBox = 256;
+                float widthDif = (rightBox - leftBox) / 2.2f;
+                float heightDif = (botBox - topBox) / 2.2f;
+                float midWidht = (rightBox + leftBox) / 2 - widthDif;
+                float midHeight = (botBox + topBox) / 2 - heightDif;
+
+
+
+                TileIndexX = (int)(player.Position.X + midWidht + widthDif * i) / map[mapIndex].TileWidth;
+                TileIndexY = (int)(player.Position.Y + botBox) / map[mapIndex].TileHeight;
+
+                if (map[mapIndex].TileLayers[0].Tiles[TileIndexX][TileIndexY] != null) // going down
+                {
+                    if (player.Velocity.Y > 0)
+                    {
+                        player.Position = new Vector2(
+                            player.Position.X,
+                            map[mapIndex].TileLayers[0].Tiles[TileIndexX][TileIndexY].Target.Y -
+                            map[mapIndex].TileHeight / 2 - botBox);
+
+                        player.Land();
+                    }
+                }
+
+                TileIndexX = (int)(player.Position.X + midWidht + widthDif * i) / map[mapIndex].TileWidth;
+                TileIndexY = (int)(player.Position.Y + topBox) / map[mapIndex].TileHeight;
+
+                if (map[mapIndex].TileLayers[0].Tiles[TileIndexX][TileIndexY] != null) // going up
+                {
+                    player.Position = new Vector2(
+                        player.Position.X,
+                        map[mapIndex].TileLayers[0].Tiles[TileIndexX][TileIndexY].Target.Y +
+                        map[mapIndex].TileHeight / 2 + topBox);
+                }
+
+                TileIndexX = (int)(player.Position.X + rightBox) / map[mapIndex].TileWidth;
+                TileIndexY = (int)(player.Position.Y + midHeight + heightDif * i) / map[mapIndex].TileHeight;
+
+                if (map[mapIndex].TileLayers[0].Tiles[TileIndexX][TileIndexY] != null) // going right
+                {
+                    player.Position = new Vector2(
+                        map[mapIndex].TileLayers[0].Tiles[TileIndexX][TileIndexY].Target.X -
+                        map[mapIndex].TileWidth / 2 - rightBox
+                        , player.Position.Y);
+                }
+
+                TileIndexX = (int)(player.Position.X + leftBox) / map[mapIndex].TileWidth;
+                TileIndexY = (int)(player.Position.Y + midHeight + heightDif * i) / map[mapIndex].TileHeight;
+
+                if (map[mapIndex].TileLayers[0].Tiles[TileIndexX][TileIndexY] != null) // going left
+                {
+                    player.Position = new Vector2(
+                        map[mapIndex].TileLayers[0].Tiles[TileIndexX][TileIndexY].Target.X +
+                        map[mapIndex].TileWidth/2 - leftBox
+                        , player.Position.Y);
+                }
+            }
+        }
+
+        private int TileIndexX
+        {
+            get { return dontUseThisTileIndexX; }
+            set { dontUseThisTileIndexX = (value >= 0 && value < map[mapIndex].Width) ? value : 0; }
+        }
+
+        private int TileIndexY
+        {
+            get { return dontUseThisTileIndexY; }
+            set { dontUseThisTileIndexY = (value >= 0 && value < map[mapIndex].Height) ? value : 0; }
         }
     }
 }
