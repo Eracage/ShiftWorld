@@ -242,7 +242,7 @@ namespace ShiftWorld
 
             for (int i = 0; i < 3; i++)
             {
-                float leftBox = 96, rightBox = 192, topBox = 0, botBox = 256;
+                float leftBox = 96, rightBox = 192, topBox = 0, botBox = 255;
                 float widthDif = (rightBox - leftBox) / 2.2f;
                 float heightDif = (botBox - topBox) / 4f;
                 float midWidht = (rightBox + leftBox) / 2 - widthDif;
