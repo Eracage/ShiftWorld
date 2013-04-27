@@ -18,27 +18,31 @@ namespace ShiftWorld
     class Particle
     {
         Texture2D _texture;
-        float _life;
+        protected float _life;
+        protected float _startingLife;
+        protected Vector2 _position = Vector2.Zero;
+        protected Vector4 _color = new Vector4(1.0f);
 
-        public Particle(Texture2D texture)
+        public Particle(Texture2D texture, Vector2 Position, float life = 500)
         {
             _texture = texture;
-            _life = 500;
+            _startingLife = _life = life;
         }
 
-        public void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
         {
             _life -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
         }
 
         public float Life
         {
+            set { _life = value; }
             get { return _life; }
         }
 
-        public void Draw()
+        public void Draw(SpriteBatch spriteBatch)
         {
-
+            spriteBatch.Draw(_texture,_position, null, new Color(_color),0, new Vector2(_texture.Width/2),1f,SpriteEffects.None, 0.0f);
         }
     }
 }

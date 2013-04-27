@@ -121,7 +121,7 @@ namespace ShiftWorld
                     {
                         if (keyboardState.IsKeyDown(Keys.W)) // move up
                         {
-                            _animator.ChangeAnimation(1, 1, 1, 1);
+                            _animator.ChangeAnimation(4, 4, 1, 1);
                             _animator.AnimationTransition(1, 1, 4, 15);
                             _jumpDelayms = 120;
                             _jumping = true;
