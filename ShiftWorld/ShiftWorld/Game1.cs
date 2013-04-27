@@ -80,7 +80,7 @@ namespace ShiftWorld
 
 
 
-            player = new Player(Content.Load<Texture2D>("Textures/character Run"));
+            player = new Player(Content.Load<Texture2D>("Textures/character animations"));
 
 
 
