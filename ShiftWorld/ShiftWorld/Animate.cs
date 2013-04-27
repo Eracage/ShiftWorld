@@ -42,7 +42,7 @@ namespace ShiftWorld
             width = FrameWidth;
             height = FrameHeight;
             fps = FPS;
-            firstFrame = FirstFrame-1;
+            currentFrame = firstFrame = FirstFrame-1;
             timer = 0;
         }
 

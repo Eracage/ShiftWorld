@@ -24,7 +24,7 @@ namespace ShiftWorld
 
         public Player(Texture2D texture)
         {
-            _animator = new Animate(texture,10,256,256,12.5f);
+            _animator = new Animate(texture,10,256,256,12.5f,9);
             _position = new Vector2(50,50);
         }
 
