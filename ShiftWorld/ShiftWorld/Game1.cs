@@ -237,7 +237,7 @@ namespace ShiftWorld
             {
                 float leftBox = 96, rightBox = 224, topBox = 0, botBox = 256;
                 float widthDif = (rightBox - leftBox) / 2.2f;
-                float heightDif = (botBox - topBox) / 2.2f;
+                float heightDif = (botBox - topBox) / 4f;
                 float midWidht = (rightBox + leftBox) / 2 - widthDif;
                 float midHeight = (botBox + topBox) / 2 - heightDif;
 
