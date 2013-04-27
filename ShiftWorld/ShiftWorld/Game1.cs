@@ -111,9 +111,10 @@ namespace ShiftWorld
             // TODO: Add your update logic here
             keyboardState = Keyboard.GetState();
 
-            Vector2 cameraDelta = new Vector2((float)(gameTime.ElapsedGameTime.TotalMilliseconds/1000.0f)*50,0);
+            Vector2 cameraDelta = new Vector2((float)(gameTime.ElapsedGameTime.TotalMilliseconds/1000.0f) * 50,0);
             cameraPos += cameraDelta;
             camera.Pos = new Vector2(cameraPos.X, cameraPos.Y);
+            camera.Pos = new Vector2((int)cameraPos.X, (int)cameraPos.Y);
 
 
 
