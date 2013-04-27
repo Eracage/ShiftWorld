@@ -26,6 +26,7 @@ namespace ShiftWorld
         KeyboardState keyboardState;
         MouseState mouseState;
 
+        ParticleController particleController;
         Rectangle mapView;
         List<Map> map;
         int mapIndex = 0;
@@ -78,7 +79,7 @@ namespace ShiftWorld
 
 
 
-
+            particleController = new ParticleController(Content.Load<Texture2D>("Textures/Particle"));
             map = new List<Map>();
             map.Add(Content.Load<Map>("Maps/map_testing"));
             mapView = map[0].Bounds;
@@ -127,11 +128,11 @@ namespace ShiftWorld
 
             if (player.HP() < 0 || player.Position.Y > (map[mapIndex].Height * map[mapIndex].TileHeight - player.Height))
             {
-                this.Exit();
+                //this.Exit();
             }
 
 
-
+            particleController.Update(gameTime, cameraPos,new Vector2(cameraPos.X + mouseState.X - width/2, cameraPos.Y + mouseState.Y - height/2));
 
             HitBoxes(gameTime);
 
@@ -149,7 +150,7 @@ namespace ShiftWorld
             // TODO: Add your drawing code here
 
             spriteBatch.Begin(SpriteSortMode.BackToFront,
-                        BlendState.AlphaBlend,
+                        BlendState.NonPremultiplied,
                         null,
                         null,
                         null,
@@ -159,6 +160,8 @@ namespace ShiftWorld
             DrawMapLayers(spriteBatch, mapIndex);
 
             player.Draw(spriteBatch);
+
+            particleController.Draw(spriteBatch);
 
 
 

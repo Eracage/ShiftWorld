@@ -23,6 +23,7 @@ namespace ShiftWorld
         int height;
         float fps;
 
+        float depth;
         float timer = 0;
         int currentFrame = 0;
         int firstFrame = 0;
@@ -35,8 +36,9 @@ namespace ShiftWorld
         int memFrames;
         float memFPS;
 
-        public Animate(Texture2D Texture, int Frames, int FrameWidth, int FrameHeight, float FPS, int FirstFrame = 1)
+        public Animate(Texture2D Texture, int Frames, int FrameWidth, int FrameHeight, float FPS, int FirstFrame = 1, float Depth = 0.0f)
         {
+            depth = Depth;
             texture = Texture;
             frames = Frames;
             width = FrameWidth;
@@ -49,20 +51,21 @@ namespace ShiftWorld
         public void Update(GameTime gameTime)
         {
             timer += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (timer > 1000 / fps)
+            if (timer > 1000.0f / fps)
             {
                 currentFrame++;
                 if (currentFrame >= firstFrame + frames)
                 {
                     currentFrame = firstFrame;
                 }
-                timer -= 1000 / fps;
+                timer -= 1000.0f / fps;
+                
                 counter++;
             }
 
             if (transition)
             {
-                if (!(counter < frames))
+                if ((counter >= frames))
                 {
                     firstFrame = memFirstFrame;
                     frames = memFrames;
@@ -98,7 +101,7 @@ namespace ShiftWorld
             var currentFrameX = (currentFrame % (texture.Width / width)) * width;
             var currentFrameY = (int)((Math.Floor((double)currentFrame / ((double)texture.Width / (double)width))) * height);
 
-            SB.Draw(texture, Position, new Rectangle(currentFrameX, currentFrameY, width, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f); // ,0f, new Vector2(width/2, height/2), SpriteEffects.None, 0f);
+            SB.Draw(texture, Position, new Rectangle(currentFrameX, currentFrameY, width, height), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, depth); // ,0f, new Vector2(width/2, height/2), SpriteEffects.None, 0f);
         }
     }
 }

@@ -21,14 +21,16 @@ namespace ShiftWorld
             : base(texture,position) 
         { }
 
-        public void Update(GameTime gameTime)
+        public override bool Update(GameTime gameTime)
         {
             _color.X = 1.0f;
-            _color.Y = _life / _startingLife;
-            _color.Z = _life / _startingLife;
-            _color.W = _life / _startingLife;
+            _color.Y = 0.2f;
+            _color.Z = 0.2f;
+            _color.W = 1.0f;
+            _scale = _life/_startingLife;
+            _depth += 0.0000001f;
 
-            base.Update(gameTime);
+            return base.Update(gameTime);
         }
     }
 }

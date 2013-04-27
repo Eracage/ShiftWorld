@@ -31,7 +31,7 @@ namespace ShiftWorld
 
         public Player(Texture2D texture)
         {
-            _animator = new Animate(texture,10,256,256,10f,9);
+            _animator = new Animate(texture, 10, 256, 256, 10f, 9, 0.5f);
             _position = new Vector2(10,10);
         }
 
@@ -121,7 +121,7 @@ namespace ShiftWorld
                     {
                         if (keyboardState.IsKeyDown(Keys.W)) // move up
                         {
-                            _animator.ChangeAnimation(4, 4, 1, 1);
+                            _animator.ChangeAnimation(4, 4, 1, 0.1f);
                             _animator.AnimationTransition(1, 1, 4, 15);
                             _jumpDelayms = 120;
                             _jumping = true;
@@ -132,6 +132,8 @@ namespace ShiftWorld
             else if (!_zenithReached && _velocity.Y > 0)
             {
                 _animator.ChangeAnimation(5, 5, 1, 1);
+                _animator.AnimationTransition(19, 19, 1,12f);
+                _zenithReached = true;
             }
             //if (keyboardState.IsKeyDown(Keys.S)) // move down
             //    _movement.Y += _speed * deltaTime;

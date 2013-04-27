@@ -20,7 +20,7 @@ namespace ShiftWorld
     {
         Texture2D _particleTexture;
         Vector2 _cameraPosition;
-        List<Particle> Particles = new List<Particle>();
+        List<CursorParticle> _cursor = new List<CursorParticle>();
 
         float _timer = 0;
 
@@ -33,22 +33,23 @@ namespace ShiftWorld
         { 
             _cameraPosition = cameraPosition;
 
-            _timer -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (_timer < 0)
-            {
-                _timer += 10;
-                Particles.Add(new CursorParticle(_particleTexture, cameraPosition + MouseRtCamera));
-            }
+            //_timer -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            //if (_timer < 0)
+            //{
+            //    _timer += 50;
+                _cursor.Add(new CursorParticle(_particleTexture, MouseRtCamera));
+            //}
 
-            foreach (var particle in Particles)
+            for (int i = (_cursor.Count - 1); i >= 0; --i )
             {
-                particle.Update(gameTime);
+                if (_cursor[i].Update(gameTime))
+                    _cursor.RemoveAt(i);
             }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            foreach (var particle in Particles)
+            foreach (var particle in _cursor)
             {
                 particle.Draw(spriteBatch);
             }
