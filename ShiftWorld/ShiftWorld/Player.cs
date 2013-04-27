@@ -42,6 +42,12 @@ namespace ShiftWorld
             _animator.Draw(spriteBatch, _position);
         }
 
+        public Vector2 Position
+        {
+            get { return _position; }
+            set { _position = value; }
+        }
+
         private void movement(KeyboardState keyboardState, GameTime gameTime)
         {
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalMilliseconds / 1000f;

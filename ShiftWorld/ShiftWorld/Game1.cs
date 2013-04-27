@@ -20,7 +20,7 @@ namespace ShiftWorld
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        int width = 1280, height = 720;
+        int width = 1280, height = 768;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         KeyboardState keyboardState;
@@ -51,15 +51,6 @@ namespace ShiftWorld
         /// </summary>
         protected override void Initialize()
         {
-            map = new List<Map>();
-
-            cameraPos = new Vector2(width / 2, height / 2);
-            camera.Pos = new Vector2((int)cameraPos.X, (int)cameraPos.Y);
-
-
-
-
-
             mapView = graphics.GraphicsDevice.Viewport.Bounds;
 
             base.Initialize();
@@ -85,7 +76,14 @@ namespace ShiftWorld
 
 
 
-            map.Add(Content.Load<Map>("Maps/stage"));
+            map = new List<Map>();
+            map.Add(Content.Load<Map>("Maps/map_testing"));
+            mapView = map[0].Bounds;
+
+            cameraPos = new Vector2(width, map[mapIndex].Height * map[mapIndex].TileHeight / 2);
+            camera.Pos = new Vector2((int)cameraPos.X, (int)cameraPos.Y);
+            camera.Zoom = 0.5f;
+            player.SetPosition(cameraPos);
         }
 
         /// <summary>
@@ -111,10 +109,11 @@ namespace ShiftWorld
             // TODO: Add your update logic here
             keyboardState = Keyboard.GetState();
 
-            Vector2 cameraDelta = new Vector2((float)(gameTime.ElapsedGameTime.TotalMilliseconds/1000.0f) * 50,0);
+            Vector2 cameraDelta = new Vector2((float)(gameTime.ElapsedGameTime.TotalMilliseconds/1000.0f) * 200,0);
             cameraPos += cameraDelta;
-            camera.Pos = new Vector2(cameraPos.X, cameraPos.Y);
-            camera.Pos = new Vector2((int)cameraPos.X, (int)cameraPos.Y);
+
+            //camera.Pos = new Vector2(cameraPos.X, cameraPos.Y);
+            camera.Pos = new Vector2((int)cameraPos.X, cameraPos.Y);
 
 
 
@@ -162,9 +161,12 @@ namespace ShiftWorld
 
         public void DrawMapLayers(SpriteBatch spriteBatch, int mapIndex)
         {
-            for (int i = 0; i < map[0].TileLayers.Count; ++i)
+            for (int i = 0; i < map[mapIndex].TileLayers.Count; ++i)
             {
-                DrawLayer(spriteBatch, map[mapIndex], i, ref mapView, 0.1f - 0.001f * i);
+                if (true)
+                {
+                    DrawLayer(spriteBatch, map[mapIndex], i, ref mapView, 0.1f - 0.001f * i);
+                }
             }
         }
 
