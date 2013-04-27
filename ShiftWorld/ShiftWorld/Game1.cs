@@ -127,7 +127,7 @@ namespace ShiftWorld
 
             if (player.HP() < 0 || player.Position.Y > (map[mapIndex].Height * map[mapIndex].TileHeight - player.Height))
             {
-                this.Exit();
+                //this.Exit();
             }
 
 
