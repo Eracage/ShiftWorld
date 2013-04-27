@@ -18,7 +18,7 @@ namespace ShiftWorld
         private Vector2 _position;
         private Animate _animator;
         private Vector2 _velocity = Vector2.Zero;
-        private float _speed = 200;
+        private float _speed = 100;
         private float _jumpDelayms = 0;
         private bool _jumping = false;
         private bool _inAir = true;
@@ -72,7 +72,7 @@ namespace ShiftWorld
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalMilliseconds / 1000f;
             float gravitation = deltaTime * 30;
             _velocity.Y += gravitation;
-            _velocity.X = 0;
+            _velocity.X = deltaTime * 180;
 
             //if (_velocity.Y > gravitation)
             //{
@@ -89,9 +89,9 @@ namespace ShiftWorld
             }
 
             if (keyboardState.IsKeyDown(Keys.A)) // move left
-                _velocity.X = -_speed * deltaTime;
+                _velocity.X -= _speed * deltaTime;
             if (keyboardState.IsKeyDown(Keys.D)) // move right
-                _velocity.X = _speed * deltaTime;
+                _velocity.X += _speed * deltaTime;
             if (!_inAir)
             {
                 if (_velocity.Y == gravitation)
