@@ -20,6 +20,7 @@ namespace ShiftWorld
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        KeyboardState keyboardState;
 
         Rectangle mapView;
         Map map;
@@ -84,6 +85,9 @@ namespace ShiftWorld
                 this.Exit();
 
             // TODO: Add your update logic here
+            keyboardState = Keyboard.GetState();
+
+            player.Update(keyboardState);
 
             base.Update(gameTime);
         }

@@ -24,6 +24,18 @@ namespace ShiftWorld
             _position = new Vector2(50,50);
         }
 
+        public void Update(KeyboardState keyboardState)
+        {
+            if (keyboardState.IsKeyDown(Keys.A)) // move left
+                _position.X -= 1;
+            if (keyboardState.IsKeyDown(Keys.D)) // move right
+                _position.X += 1;
+            if (keyboardState.IsKeyDown(Keys.W)) // move up
+                _position.Y -= 1;
+            if (keyboardState.IsKeyDown(Keys.S)) // move down
+                _position.Y += 1;
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(_texture,_position, Color.White);
