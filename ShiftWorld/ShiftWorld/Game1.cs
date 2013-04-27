@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using FuncWorks.XNA.XTiled;
+using System.Diagnostics;
+using System.Media;
 using System.Text;
 
 namespace ShiftWorld
@@ -18,18 +20,25 @@ namespace ShiftWorld
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+        int width = 1280, height = 720;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         KeyboardState keyboardState;
 
         Rectangle mapView;
-        Map map;
+        List<Map> map;
+        Camera2d camera = new Camera2d();
+
         Player player;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            Window.Title = "ShiftWorld";
+            graphics.PreferredBackBufferWidth = width;
+            graphics.PreferredBackBufferHeight = height;
+            graphics.ApplyChanges();
         }
 
         /// <summary>
@@ -40,12 +49,17 @@ namespace ShiftWorld
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            map = new List<Map>();
 
 
-            base.Initialize();
+
+
+
+
 
             mapView = graphics.GraphicsDevice.Viewport.Bounds;
+
+            base.Initialize();
         }
 
         /// <summary>
@@ -59,9 +73,16 @@ namespace ShiftWorld
 
             // TODO: use this.Content to load your game content here
 
-            player = new Player(Content.Load<Texture2D>("character size"));
 
-            //map = Content.Load<Map>("");
+
+
+
+            player = new Player(Content.Load<Texture2D>("Textures/character size"));
+
+
+
+
+            map.Add(Content.Load<Map>("Maps/stage"));
         }
 
         /// <summary>
@@ -87,7 +108,16 @@ namespace ShiftWorld
             // TODO: Add your update logic here
             keyboardState = Keyboard.GetState();
 
+
+
+
+
+
             player.Update(keyboardState);
+
+
+
+
 
             base.Update(gameTime);
         }
@@ -101,13 +131,88 @@ namespace ShiftWorld
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-            spriteBatch.Begin();
+
+            spriteBatch.Begin(SpriteSortMode.BackToFront,
+                        BlendState.AlphaBlend,
+                        null,
+                        null,
+                        null,
+                        null,
+                        camera.get_transformation(GraphicsDevice /*Send the variable that has your graphic device here*/));
+
+            DrawLayer(spriteBatch, map[0], 0, ref mapView, 0.1f);
+            DrawLayer(spriteBatch, map[0], 1, ref mapView, 0.2f);
+            DrawLayer(spriteBatch, map[0], 2, ref mapView, 0.3f);
+            DrawLayer(spriteBatch, map[0], 3, ref mapView, 0.4f);
+
+
 
             player.Draw(spriteBatch);
+
+
+
+
 
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        public void DrawLayer(SpriteBatch spriteBatch, Map map, Int32 layerID, ref Rectangle region, Single layerDepth)
+        {
+
+            // Tiles are stored in a multidimensional array.
+            // By converting the map coordinates to tile coordinates 
+            // we can eliminate the need for bound checking
+            Int32 txMin = region.X / map.TileWidth;
+            Int32 txMax = (region.X + region.Width) / map.TileWidth;
+            Int32 tyMin = region.Y / map.TileHeight;
+            Int32 tyMax = (region.Y + region.Height) / map.TileHeight;
+
+            for (int y = tyMin; y <= tyMax; y++)
+            {
+                for (int x = txMin; x <= txMax; x++)
+                {
+
+                    // check that we aren't going outside the map, and that there is a tile at this location
+                    if (x < map.TileLayers[layerID].Tiles.Length && y < map.TileLayers[layerID].Tiles[x].Length
+                        && map.TileLayers[layerID].Tiles[x][y] != null)
+                    {
+                        map.TileLayers[layerID].OpacityColor = Color.White;
+
+                        // adjust the tiles map coordinates to screen space
+                        Rectangle tileTarget = map.TileLayers[layerID].Tiles[x][y].Target;
+                        tileTarget.X = tileTarget.X - region.X;
+                        tileTarget.Y = tileTarget.Y - region.Y;
+
+                        spriteBatch.Draw(
+                            // the texture (image) of the tile sheet is mapped by
+                            // Tile.SourceID -> TileLayers.TilesetID -> Map.Tileset.Texture
+                            map.Tilesets[map.SourceTiles[map.TileLayers[layerID].Tiles[x][y].SourceID].TilesetID].Texture,
+
+                            // screen space of the tile
+                            tileTarget,
+
+                            // source of the tile in the tilesheet
+                            map.SourceTiles[map.TileLayers[layerID].Tiles[x][y].SourceID].Source,
+
+                            // layers can have an opacity value, this property is Color.White at the opacity of the layer
+                            map.TileLayers[layerID].OpacityColor,
+
+                            // tile rotation value
+                            map.TileLayers[layerID].Tiles[x][y].Rotation,
+
+                            // origin of the tile, this is always the center of the tile
+                            map.SourceTiles[map.TileLayers[layerID].Tiles[x][y].SourceID].Origin,
+
+                            // tile horizontal or vertical flipping value
+                            map.TileLayers[layerID].Tiles[x][y].Effects,
+
+                            // depth for SpriteSortMode
+                            layerDepth);
+                    }
+                }
+            }
         }
     }
 }
