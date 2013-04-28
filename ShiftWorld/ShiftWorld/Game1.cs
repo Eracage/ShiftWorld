@@ -226,7 +226,7 @@ namespace ShiftWorld
 
                     spriteBatch.End();
 
-                    spriteBatch.Begin(SpriteSortMode.BackToFront,BlendState.NonPremultiplied);
+                    spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.NonPremultiplied);
 
                     spriteBatch.Draw(titlescreen, Vector2.Zero, Color.White);
                     break;
