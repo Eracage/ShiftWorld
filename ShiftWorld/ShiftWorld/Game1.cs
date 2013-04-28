@@ -25,7 +25,8 @@ namespace ShiftWorld
             Menu = 0,
             LevelSelect = 1,
             Play = 2,
-            Credits = 3
+            Credits = 3,
+            Instructions = 4
 	    }
         State Game = State.Menu;
         int width = 1280, height = 768;
@@ -60,6 +61,7 @@ namespace ShiftWorld
         Butterfly butterfly;
         Mist mist;
         Texture2D titlescreen;
+        Texture2D credits;
 
         public Game1()
         {
@@ -101,7 +103,10 @@ namespace ShiftWorld
             player = new Player(Content.Load<Texture2D>("Textures/character animations"));
             butterfly = new Butterfly(Content.Load<Texture2D>("Textures/butterfly"));
             mist = new Mist(Content.Load<Texture2D>("Textures/sumu"), camera.Zoom);
+
             titlescreen = Content.Load<Texture2D>("Textures/title");
+            credits = Content.Load<Texture2D>("Textures/credits screen");
+
 
 
             objectController = new ObjectController(Content.Load<Texture2D>("Textures/BARREL"));
@@ -156,6 +161,13 @@ namespace ShiftWorld
                         SwitchGameState(State.Play);
                     if (StartGame.Contains(mouseState.X, mouseState.Y) && mouseState.LeftButton == ButtonState.Pressed)
                         SwitchGameState(State.Play);
+                    if (Instructions.Contains(mouseState.X, mouseState.Y) && mouseState.LeftButton == ButtonState.Pressed)
+                        SwitchGameState(State.Instructions);
+                    if (Credits.Contains(mouseState.X, mouseState.Y) && mouseState.LeftButton == ButtonState.Pressed)
+                        SwitchGameState(State.Credits);
+                    if (ExitGame.Contains(mouseState.X, mouseState.Y) && mouseState.LeftButton == ButtonState.Pressed)
+                        Exit();
+
                     break;
 
                 case State.LevelSelect:
@@ -194,6 +206,8 @@ namespace ShiftWorld
                     if (keyboardState.IsKeyDown(Keys.Space))
                         SwitchGameState(State.Menu);
                     break;
+
+
 
                 default:
                     SwitchGameState(State.Menu);
@@ -249,6 +263,9 @@ namespace ShiftWorld
                     break;
 
                 case State.Credits:
+
+                    spriteBatch.Draw(credits, Vector2.Zero, null, Color.White, 0.0f, Vector2.Zero, 1/0.6f, SpriteEffects.None, 0.1f);
+
                     break;
             }
 
