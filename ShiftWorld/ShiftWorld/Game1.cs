@@ -97,7 +97,7 @@ namespace ShiftWorld
             map = new List<Map>();
             map.Add(Content.Load<Map>("Maps/testing_map"));
 
-            camera.Zoom = 0.65f;
+            camera.Zoom = 0.6f;
 
             Reset();
         }
@@ -126,7 +126,7 @@ namespace ShiftWorld
             keyboardState = Keyboard.GetState();
             mouseState = Mouse.GetState();
 
-            Vector2 cameraDelta = new Vector2((float)(gameTime.ElapsedGameTime.TotalMilliseconds / 1000.0f) * 500, 0);
+            Vector2 cameraDelta = new Vector2((float)(gameTime.ElapsedGameTime.TotalMilliseconds / 1000.0f) * 200, 0);
             cameraPos = new Vector2(player.Position.X + 480/camera.Zoom, map[mapIndex].Height * map[mapIndex].TileHeight / 2.0f);
             camera.Pos = new Vector2((1 / camera.Zoom) * ((int)(cameraPos.X * camera.Zoom)), cameraPos.Y);
             //camera.Pos = new Vector2(cameraPos.X, cameraPos.Y);
