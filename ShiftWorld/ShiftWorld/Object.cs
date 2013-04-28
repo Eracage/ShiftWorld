@@ -19,8 +19,8 @@ namespace ShiftWorld
     {
         Texture2D _texture;
         Vector2 _position;
-        float _sizeX = 1.0f;
-        float _sizeY = 1.0f;
+        float _sizeX = 4.0f;
+        float _sizeY = 4.0f;
 
         public Object(Texture2D texture, Vector2 position)
         {
@@ -37,7 +37,7 @@ namespace ShiftWorld
 
         public Rectangle Bounds()
         {
-            return new Rectangle((int)(_position.X - (_texture.Width/2) / _sizeX), (int)(_position.Y - (_texture.Height/2) / _sizeX), (int)(_texture.Width/_sizeX), (int)(_texture.Height/_sizeX));
+            return new Rectangle((int)(_position.X - _texture.Width * _sizeX / 8), (int)(_position.Y - _texture.Height * _sizeY / 8), (int)(_texture.Width*_sizeX/4), (int)(_texture.Height*_sizeY/4));
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -45,8 +45,8 @@ namespace ShiftWorld
             spriteBatch.Draw(_texture, 
                 new Rectangle((int)(0), (int)(0), (int)(_texture.Width * _sizeX / 4), (int)(_texture.Height * _sizeY / 4)), 
                 null, Color.White, 0, 
-                new Vector2(_texture.Width * _sizeX / 8, _texture.Height * _sizeY / 8) - _position, 
-                SpriteEffects.None, 0.2f);
+                new Vector2(_texture.Width * _sizeX / 8, _texture.Height * _sizeY / 4) - _position, 
+                SpriteEffects.None, 0.0f);
         }
     }
 }

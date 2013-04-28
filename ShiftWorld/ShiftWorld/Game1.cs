@@ -34,6 +34,7 @@ namespace ShiftWorld
         KeyboardState keyboardState;
         MouseState mouseState;
 
+        ObjectController objectController;
         ParticleController particleController;
         Rectangle mapView;
         List<Map> map;
@@ -48,6 +49,7 @@ namespace ShiftWorld
         float beamCooldown;
         float dyingCountDown = 0;
         bool killed = false;
+
 
         Player player;
         Butterfly butterfly;
@@ -95,7 +97,7 @@ namespace ShiftWorld
             mist = new Mist(Content.Load<Texture2D>("Textures/sumu"), camera.Zoom);
 
 
-
+            objectController = new ObjectController(Content.Load<Texture2D>("Textures/BARREL"));
             particleController = new ParticleController(Content.Load<Texture2D>("Textures/Particle"), Content.Load<Texture2D>("Textures/sumu"));
             map = new List<Map>();
             map.Add(Content.Load<Map>("Maps/testing_map"));
@@ -229,6 +231,7 @@ namespace ShiftWorld
                     player.Draw(spriteBatch);
                     butterfly.Draw(spriteBatch);
                     mist.Draw(spriteBatch);
+                    objectController.Draw(spriteBatch);
                     particleController.Draw(spriteBatch);
                     break;
 
@@ -416,17 +419,6 @@ namespace ShiftWorld
             set { dontUseThisTileIndexY = (value >= 0 && value < map[mapIndex].Height) ? value : 0; }
         }
 
-        private void Reset()
-        {
-            mapView = map[mapIndex].Bounds;
-
-            killed = false;
-            dyingCountDown = 0;
-
-            player.Reset();
-            particleController.Reset();
-        }
-
         private void SwitchGameState(State GameState)
         {
             switch (GameState)
@@ -444,6 +436,29 @@ namespace ShiftWorld
                 case State.Credits:
                     Game = State.Credits;
                     break;
+            }
+        }
+
+        private void Reset()
+        {
+            mapView = map[mapIndex].Bounds;
+
+            killed = false;
+            dyingCountDown = 0;
+
+            player.Reset();
+            particleController.Reset();
+
+            objectController.Reset();
+            foreach (var l in map[mapIndex].ObjectLayers)
+            {
+                foreach (var o in l.MapObjects)
+                {
+                    if (o.Name == "Barrel")
+                    {
+                        objectController.AddObject(1, new Vector2(o.Bounds.X, o.Bounds.Y));
+                    }
+                }
             }
         }
     }

@@ -11,4 +11,8 @@
    eJxjYBgFo4A8IAPEYjgwtYAQEEsAsSCSmCgQi+PA5ACYPyQJqMNnL7YwQDYPW1jJQvWKUGAvNixCpN6haC8ApFQH+Q==
   </data>
  </layer>
+ <objectgroup name="Object Layer 1" width="30" height="10">
+  <object name="Barrel" x="510" y="896"/>
+  <object name="Barrel" x="605" y="896"/>
+ </objectgroup>
 </map>
