@@ -35,6 +35,9 @@ namespace ShiftWorld
         int dontUseThisTileIndexX;
         int dontUseThisTileIndexY;
 
+        float beamCooldown;
+        float dyingTime = 0;
+
         Player player;
 
         public Game1()
@@ -55,8 +58,6 @@ namespace ShiftWorld
         /// </summary>
         protected override void Initialize()
         {
-            mapView = graphics.GraphicsDevice.Viewport.Bounds;
-
             base.Initialize();
         }
 
@@ -82,11 +83,10 @@ namespace ShiftWorld
             particleController = new ParticleController(Content.Load<Texture2D>("Textures/Particle"));
             map = new List<Map>();
             map.Add(Content.Load<Map>("Maps/map_testing"));
-            mapView = map[0].Bounds;
 
-            cameraPos = new Vector2(width, map[mapIndex].Height * map[mapIndex].TileHeight / 2);
-            camera.Pos = new Vector2((int)cameraPos.X, (int)cameraPos.Y);
-            camera.Zoom = 1f;
+            camera.Zoom = 0.5f;
+
+            Reset();
         }
 
         /// <summary>
@@ -114,8 +114,9 @@ namespace ShiftWorld
             mouseState = Mouse.GetState();
 
             Vector2 cameraDelta = new Vector2((float)(gameTime.ElapsedGameTime.TotalMilliseconds/1000.0f) * 200,0);
-            //cameraPos += cameraDelta;
-            cameraPos = player.Position;
+            cameraPos = new Vector2(player.Position.X, map[mapIndex].Height * map[mapIndex].TileHeight / 2.0f);
+
+            Vector2 RmousePosition = new Vector2(cameraPos.X + (mouseState.X - width/2) /camera.Zoom, cameraPos.Y + (mouseState.Y - height/2) / camera.Zoom);
 
             //camera.Pos = new Vector2(cameraPos.X, cameraPos.Y);
             camera.Pos = new Vector2((int)cameraPos.X, cameraPos.Y);
@@ -126,15 +127,26 @@ namespace ShiftWorld
             
             player.Update(keyboardState, gameTime, cameraDelta, cameraPos);
 
+            dyingTime -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            if (0 < dyingTime && dyingTime < 500)
+            {
+                Reset();
+                dyingTime = 0;
+            }
             if (player.HP() < 0 || player.Position.Y > (map[mapIndex].Height * map[mapIndex].TileHeight - player.Height))
             {
                 player.Die();
+                if (dyingTime < -500)
+                    dyingTime = 1000;
             }
 
 
-            particleController.Update(gameTime, cameraPos,new Vector2(cameraPos.X + mouseState.X - width/2, cameraPos.Y + mouseState.Y - height/2));
+
+            particleController.Update(gameTime, cameraPos, RmousePosition);
 
             HitBoxes(gameTime);
+
+            Beam(gameTime, RmousePosition);
 
             base.Update(gameTime);
         }
@@ -240,6 +252,27 @@ namespace ShiftWorld
             }
         }
 
+        private void Beam(GameTime gameTime, Vector2 RMousePosition)
+        {
+            beamCooldown += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+            if (beamCooldown > 500)
+            {
+                Vector2 direction = RMousePosition - player.Position;
+                direction.Normalize();
+                if (mouseState.LeftButton == ButtonState.Pressed)
+                {
+                    beamCooldown = 0;
+                    particleController.AddBeam(player.Position, direction, true);
+                }
+                else if (mouseState.RightButton == ButtonState.Pressed)
+                {
+                    beamCooldown = 0;
+                    particleController.AddBeam(player.Position, direction, false);
+                }
+            }
+        }
+
         private void HitBoxes(GameTime gameTime)
         {
 
@@ -320,6 +353,14 @@ namespace ShiftWorld
         {
             get { return dontUseThisTileIndexY; }
             set { dontUseThisTileIndexY = (value >= 0 && value < map[mapIndex].Height) ? value : 0; }
+        }
+
+        private void Reset()
+        {
+            mapView = map[mapIndex].Bounds;
+
+            player.Reset();
+            particleController.Reset();
         }
     }
 }

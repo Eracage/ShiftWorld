@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Animate.cs" />
+    <Compile Include="BeamParticle.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="CursorParticle.cs" />
     <Compile Include="Particle.cs" />

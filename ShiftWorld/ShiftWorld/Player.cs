@@ -17,6 +17,7 @@ namespace ShiftWorld
     {
         private Animate _animator;
         private Vector2 _position;
+        private Vector2 _eyesPos;
         private Vector2 _cameraPos;
         private Vector2 _velocity = Vector2.Zero;
         private float _speed = 100;
@@ -33,12 +34,13 @@ namespace ShiftWorld
         public Player(Texture2D texture)
         {
             _animator = new Animate(texture, 10, 256, 256, 10f, 9, 0.5f);
-            _position = new Vector2(10,10);
+            Reset();
         }
 
         public void Update(KeyboardState keyboardState, GameTime gameTime, Vector2 cameraDelta, Vector2 cameraPosition)
         {
             _cameraPos = cameraPosition;
+            _eyesPos = new Vector2(170,80);
 
             movement(keyboardState, gameTime);
 
@@ -55,6 +57,8 @@ namespace ShiftWorld
             _velocity.Y = 0;
             if (_inAir)
             {
+                _hp = 500;
+                _jumpDelayms = 0;
                 _inAir = false;
                 _animator.ChangeAnimation(9, 16, 10, 10f);
                 _animator.AnimationTransition(5, 5, 3, 15);
@@ -70,6 +74,19 @@ namespace ShiftWorld
                 _animator.AnimationTransition(20, 20, 4, 6);
             }
             _alive = false;
+        }
+
+        public void Reset()
+        {
+            _jumping = false;
+            _inAir = true;
+            _zenithReached = false;
+            _alive = true;
+            
+            _velocity = Vector2.Zero;
+
+            _animator.ChangeAnimation(9, 9, 10, 10f);
+            _position = new Vector2(10, 10);
         }
 
         // Getters setters

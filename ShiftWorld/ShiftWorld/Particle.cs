@@ -22,21 +22,36 @@ namespace ShiftWorld
         protected float _life;
         protected float _depth;
         protected float _startingLife;
-        protected Vector2 _position = Vector2.Zero;
+        protected float _speed;
+        protected Vector2 _direction;
+        protected Vector2 _position;
         protected Vector4 _color = new Vector4(1.0f);
 
-        public Particle(Texture2D texture, Vector2 position, float life = 500, float depth = 0.0f)
+        public Particle(Texture2D texture, Vector2 position, Vector2 direction, float life = 500, float depth = 0.0f, float speed = 2.0f)
         {
             _depth = depth;
             _texture = texture;
             _position = position;
             _startingLife = _life = life;
+            _speed = speed;
+            _direction = direction;
         }
 
         public virtual bool Update(GameTime gameTime)
         {
+
+            float dt = (float)gameTime.ElapsedGameTime.TotalMilliseconds / 1000.0f;
+            _position.X += dt * _speed * _direction.X;
+            _position.Y += dt * _speed *_direction.Y;
+
             _life -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             return (_life < 0);
+        }
+
+        public float Life
+        {
+            set { _life = value; }
+            get { return _life; }
         }
 
         public void Draw(SpriteBatch spriteBatch)
