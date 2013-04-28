@@ -19,6 +19,7 @@ namespace ShiftWorld
     class ParticleController
     {
         Texture2D _particleTexture;
+        Texture2D _beamTexture;
         Vector2 _cameraPosition;
         List<CursorParticle> _cursor = new List<CursorParticle>();
         List<BeamParticle> _beam = new List<BeamParticle>();
@@ -26,9 +27,10 @@ namespace ShiftWorld
 
         //float _timer = 0;
 
-        public ParticleController(Texture2D particleTexture)
+        public ParticleController(Texture2D particleTexture, Texture2D beamTexture)
         {
             _particleTexture = particleTexture;
+            _beamTexture = beamTexture;
         }
 
         public void Update(GameTime gameTime, Vector2 cameraPosition, Vector2 MouseRtCamera)

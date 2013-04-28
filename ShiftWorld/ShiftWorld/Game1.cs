@@ -51,6 +51,7 @@ namespace ShiftWorld
 
         Player player;
         Butterfly butterfly;
+        Mist mist;
 
         public Game1()
         {
@@ -84,20 +85,21 @@ namespace ShiftWorld
 
             // TODO: use this.Content to load your game content here
 
-
+            
+            camera.Zoom = 0.6f;
 
 
 
             player = new Player(Content.Load<Texture2D>("Textures/character animations"));
             butterfly = new Butterfly(Content.Load<Texture2D>("Textures/butterfly"));
+            mist = new Mist(Content.Load<Texture2D>("Textures/sumu"), camera.Zoom);
 
 
 
-            particleController = new ParticleController(Content.Load<Texture2D>("Textures/Particle"));
+            particleController = new ParticleController(Content.Load<Texture2D>("Textures/Particle"), Content.Load<Texture2D>("Textures/sumu"));
             map = new List<Map>();
             map.Add(Content.Load<Map>("Maps/testing_map"));
 
-            camera.Zoom = 0.6f;
 
             Reset();
         }
@@ -150,7 +152,8 @@ namespace ShiftWorld
                 case State.Play:
 
                     player.Update(keyboardState, gameTime, cameraDelta);
-                    butterfly.Update(cameraPos, gameTime);
+                    butterfly.Update(camera.Pos, gameTime);
+                    mist.Update(gameTime,camera.Pos);
 
                     particleController.Update(gameTime, cameraPos, RmousePosition);
 
@@ -225,6 +228,7 @@ namespace ShiftWorld
                     DrawMapLayers(spriteBatch, mapIndex);
                     player.Draw(spriteBatch);
                     butterfly.Draw(spriteBatch);
+                    mist.Draw(spriteBatch);
                     particleController.Draw(spriteBatch);
                     break;
 
