@@ -4,7 +4,6 @@ Content\Textures\character animations.xnb
 Content\Maps\Laatikko_testing.xnb
 Content\Maps\Lankku_testing.xnb
 Content\Maps\Perusblokki_testing.xnb
-Content\Maps\map_testing.xnb
-Content\Maps\map_testing\00.xnb
-Content\Maps\map_testing\01.xnb
+Content\Maps\testing_map.xnb
+Content\Maps\testing_map\00.xnb
 Content\Textures\Particle.xnb

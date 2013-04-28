@@ -82,7 +82,7 @@ namespace ShiftWorld
 
             particleController = new ParticleController(Content.Load<Texture2D>("Textures/Particle"));
             map = new List<Map>();
-            map.Add(Content.Load<Map>("Maps/map_testing"));
+            map.Add(Content.Load<Map>("Maps/testing_map"));
 
             camera.Zoom = 0.5f;
 
@@ -133,7 +133,7 @@ namespace ShiftWorld
                 Reset();
                 dyingTime = 0;
             }
-            if (player.HP() < 0 || player.Position.Y > (map[mapIndex].Height * map[mapIndex].TileHeight - player.Height))
+            else if (player.HP() < 0 || player.Position.Y > (map[mapIndex].Height * map[mapIndex].TileHeight - player.Height))
             {
                 player.Die();
                 if (dyingTime < -500)

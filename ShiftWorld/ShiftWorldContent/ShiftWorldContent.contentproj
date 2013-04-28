@@ -40,60 +40,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Maps\hellprops.png">
-      <Name>hellprops</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Maps\hellworldsheet.png">
-      <Name>hellworldsheet</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Maps\huoneet.png">
-      <Name>huoneet</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Maps\pillzhere.png">
-      <Name>pillzhere</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Maps\props.png">
-      <Name>props</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Maps\propsit.png">
-      <Name>propsit</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Maps\punahilkka.png">
-      <Name>punahilkka</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Maps\tilesetti3.png">
-      <Name>tilesetti3</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Maps\worldsheet.png">
-      <Name>worldsheet</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Maps\stage.tmx">
-      <Name>stage</Name>
-      <Processor>TMXContentProcessor</Processor>
-      <Importer>TMXContentImporter</Importer>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Textures\character Run.png">
       <Name>character Run</Name>
       <Importer>TextureImporter</Importer>
@@ -105,13 +51,6 @@
       <Name>character animations</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Maps\map_testing.tmx">
-      <Name>map_testing</Name>
-      <Importer>TMXContentImporter</Importer>
-      <Processor>TMXContentProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -129,6 +68,21 @@
       <Name>Perusblokki_testing</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\Particle.png">
+      <Name>Particle</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_PremultiplyAlpha>False</ProcessorParameters_PremultiplyAlpha>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Maps\testing_map.tmx">
+      <Name>testing_map</Name>
+      <Importer>TMXContentImporter</Importer>
+      <Processor>TMXContentProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
