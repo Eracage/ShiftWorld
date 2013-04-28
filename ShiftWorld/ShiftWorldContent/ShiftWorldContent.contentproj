@@ -102,13 +102,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <Compile Include="Textures\BARREL.png">
       <Name>BARREL</Name>
-=======
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Textures\title.png">
       <Name>title</Name>
->>>>>>> da87d97c4879bd305039264a3e2b04db3f8849b9
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
