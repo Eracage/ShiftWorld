@@ -50,6 +50,7 @@ namespace ShiftWorld
         bool killed = false;
 
         Player player;
+        Butterfly butterfly;
 
         public Game1()
         {
@@ -88,6 +89,7 @@ namespace ShiftWorld
 
 
             player = new Player(Content.Load<Texture2D>("Textures/character animations"));
+            butterfly = new Butterfly(Content.Load<Texture2D>("Textures/butterfly"));
 
 
 
@@ -95,7 +97,7 @@ namespace ShiftWorld
             map = new List<Map>();
             map.Add(Content.Load<Map>("Maps/testing_map"));
 
-            camera.Zoom = 1.0f;
+            camera.Zoom = 0.65f;
 
             Reset();
         }
@@ -124,8 +126,8 @@ namespace ShiftWorld
             keyboardState = Keyboard.GetState();
             mouseState = Mouse.GetState();
 
-            Vector2 cameraDelta = new Vector2((float)(gameTime.ElapsedGameTime.TotalMilliseconds / 1000.0f) * 200, 0);
-            cameraPos = new Vector2(player.Position.X, map[mapIndex].Height * map[mapIndex].TileHeight / 2.0f);
+            Vector2 cameraDelta = new Vector2((float)(gameTime.ElapsedGameTime.TotalMilliseconds / 1000.0f) * 500, 0);
+            cameraPos = new Vector2(player.Position.X + 480/camera.Zoom, map[mapIndex].Height * map[mapIndex].TileHeight / 2.0f);
             camera.Pos = new Vector2((1 / camera.Zoom) * ((int)(cameraPos.X * camera.Zoom)), cameraPos.Y);
             //camera.Pos = new Vector2(cameraPos.X, cameraPos.Y);
 
@@ -148,6 +150,7 @@ namespace ShiftWorld
                 case State.Play:
 
                     player.Update(keyboardState, gameTime, cameraDelta);
+                    butterfly.Update(cameraPos, gameTime);
 
                     particleController.Update(gameTime, cameraPos, RmousePosition);
 
@@ -221,6 +224,7 @@ namespace ShiftWorld
                 case State.Play:
                     DrawMapLayers(spriteBatch, mapIndex);
                     player.Draw(spriteBatch);
+                    butterfly.Draw(spriteBatch);
                     particleController.Draw(spriteBatch);
                     break;
 
@@ -243,7 +247,7 @@ namespace ShiftWorld
             {
                 if (true)
                 {
-                    DrawLayer(spriteBatch, map[mapIndex], i, ref mapView, 0.1f - 0.001f * i);
+                    DrawLayer(spriteBatch, map[mapIndex], i, ref mapView, 0.9f - 0.001f * i);
                 }
             }
         }
