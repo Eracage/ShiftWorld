@@ -25,7 +25,8 @@ namespace ShiftWorld
             Menu = 0,
             LevelSelect = 1,
             Play = 2,
-            Credits = 3
+            Credits = 3,
+            Instructions = 4
 	    }
         State Game = State.Menu;
         int width = 1280, height = 768;
@@ -33,6 +34,11 @@ namespace ShiftWorld
         SpriteBatch spriteBatch;
         KeyboardState keyboardState;
         MouseState mouseState;
+
+        Rectangle StartGame = new Rectangle(950, 560, 320, 35);
+        Rectangle Instructions = new Rectangle(950, 600, 250, 30);
+        Rectangle Credits = new Rectangle(960, 635, 265, 35);
+        Rectangle ExitGame = new Rectangle(970, 678, 105, 40);
 
         ObjectController objectController;
         ParticleController particleController;
@@ -55,6 +61,8 @@ namespace ShiftWorld
         Butterfly butterfly;
         Mist mist;
         Texture2D titlescreen;
+        Texture2D instructions;
+        Texture2D credits;
 
         public Game1()
         {
@@ -96,7 +104,11 @@ namespace ShiftWorld
             player = new Player(Content.Load<Texture2D>("Textures/character animations"));
             butterfly = new Butterfly(Content.Load<Texture2D>("Textures/butterfly"));
             mist = new Mist(Content.Load<Texture2D>("Textures/sumu"), camera.Zoom);
+
             titlescreen = Content.Load<Texture2D>("Textures/title");
+            credits = Content.Load<Texture2D>("Textures/credits screen");
+            instructions = Content.Load<Texture2D>("Textures/instructions");
+
 
 
             objectController = new ObjectController(Content.Load<Texture2D>("Textures/BARREL"));
@@ -104,8 +116,8 @@ namespace ShiftWorld
             map = new List<Map>();
             map.Add(Content.Load<Map>("Maps/testing_map"));
 
-
             Reset();
+            SwitchGameState(State.Menu);
         }
 
         /// <summary>
@@ -147,8 +159,15 @@ namespace ShiftWorld
             {
                 case State.Menu:
                     
-                    if (keyboardState.IsKeyDown(Keys.Space))
+                    if (StartGame.Contains(mouseState.X, mouseState.Y) && mouseState.LeftButton == ButtonState.Pressed)
                         SwitchGameState(State.Play);
+                    if (Instructions.Contains(mouseState.X, mouseState.Y) && mouseState.LeftButton == ButtonState.Pressed)
+                        SwitchGameState(State.Instructions);
+                    if (Credits.Contains(mouseState.X, mouseState.Y) && mouseState.LeftButton == ButtonState.Pressed)
+                        SwitchGameState(State.Credits);
+                    if (ExitGame.Contains(mouseState.X, mouseState.Y) && mouseState.LeftButton == ButtonState.Pressed)
+                        Exit();
+
                     break;
 
                 case State.LevelSelect:
@@ -188,6 +207,11 @@ namespace ShiftWorld
                         SwitchGameState(State.Menu);
                     break;
 
+                case State.Instructions:
+                    if (keyboardState.IsKeyDown(Keys.Space))
+                        SwitchGameState(State.Menu);
+                    break;
+
                 default:
                     SwitchGameState(State.Menu);
                     break;
@@ -223,11 +247,7 @@ namespace ShiftWorld
             {
                 case State.Menu:
 
-                    spriteBatch.End();
-
-                    spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.NonPremultiplied);
-
-                    spriteBatch.Draw(titlescreen, Vector2.Zero, Color.White);
+                    spriteBatch.Draw(titlescreen, Vector2.Zero,null, Color.White,0.0f, Vector2.Zero,1/0.6f,SpriteEffects.None,0.1f);
                     break;
 
                 case State.LevelSelect:
@@ -245,6 +265,15 @@ namespace ShiftWorld
                     break;
 
                 case State.Credits:
+
+                    spriteBatch.Draw(credits, Vector2.Zero, null, Color.White, 0.0f, Vector2.Zero, 1/0.6f, SpriteEffects.None, 0.1f);
+
+                    break;
+
+                case State.Instructions:
+
+                    spriteBatch.Draw(instructions, Vector2.Zero, null, Color.White, 0.0f, Vector2.Zero, 1 / 0.6f, SpriteEffects.None, 0.1f);
+
                     break;
             }
 
@@ -457,7 +486,7 @@ namespace ShiftWorld
             switch (GameState)
             {
                 case State.Menu:
-                    player.Position = new Vector2(width / 2, height / 2);
+                    player.Position = new Vector2(width * camera.Zoom / 2 - 116, height / 2);
                     Game = State.Menu;
                     break;
 
@@ -468,6 +497,10 @@ namespace ShiftWorld
 
                 case State.Credits:
                     Game = State.Credits;
+                    break;
+
+                case State.Instructions:
+                    Game = State.Instructions;
                     break;
             }
         }
