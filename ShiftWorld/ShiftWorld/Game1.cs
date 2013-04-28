@@ -36,7 +36,8 @@ namespace ShiftWorld
         int dontUseThisTileIndexY;
 
         float beamCooldown;
-        float dyingTime = 0;
+        float dyingCountDown = 0;
+        bool killed = false;
 
         Player player;
 
@@ -84,7 +85,7 @@ namespace ShiftWorld
             map = new List<Map>();
             map.Add(Content.Load<Map>("Maps/testing_map"));
 
-            camera.Zoom = 0.5f;
+            camera.Zoom = 1f;
 
             Reset();
         }
@@ -114,31 +115,23 @@ namespace ShiftWorld
             mouseState = Mouse.GetState();
 
             Vector2 cameraDelta = new Vector2((float)(gameTime.ElapsedGameTime.TotalMilliseconds/1000.0f) * 200,0);
+
+            player.Update(keyboardState, gameTime, cameraDelta, cameraPos);
+
             cameraPos = new Vector2(player.Position.X, map[mapIndex].Height * map[mapIndex].TileHeight / 2.0f);
+
+
 
             Vector2 RmousePosition = new Vector2(cameraPos.X + (mouseState.X - width/2) /camera.Zoom, cameraPos.Y + (mouseState.Y - height/2) / camera.Zoom);
 
             //camera.Pos = new Vector2(cameraPos.X, cameraPos.Y);
-            camera.Pos = new Vector2((int)cameraPos.X, cameraPos.Y);
+            camera.Pos = new Vector2((1/camera.Zoom)*((int)(cameraPos.X*camera.Zoom)), cameraPos.Y);
 
 
 
 
             
-            player.Update(keyboardState, gameTime, cameraDelta, cameraPos);
 
-            dyingTime -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (0 < dyingTime && dyingTime < 500)
-            {
-                Reset();
-                dyingTime = 0;
-            }
-            else if (player.HP() < 0 || player.Position.Y > (map[mapIndex].Height * map[mapIndex].TileHeight - player.Height))
-            {
-                player.Die();
-                if (dyingTime < -500)
-                    dyingTime = 1000;
-            }
 
 
 
@@ -147,6 +140,21 @@ namespace ShiftWorld
             HitBoxes(gameTime);
 
             Beam(gameTime, RmousePosition);
+
+            dyingCountDown -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            if (player.HP() < 0 || player.Position.Y > (map[mapIndex].Height * map[mapIndex].TileHeight - player.Height))
+            {
+                player.Die();
+                if (!killed && dyingCountDown < -1000)
+                {
+                    killed = true;
+                    dyingCountDown = 2000;
+                }
+            }
+            if (dyingCountDown < 0 && killed)
+            {
+                Reset();
+            }
 
             base.Update(gameTime);
         }
@@ -174,9 +182,6 @@ namespace ShiftWorld
             player.Draw(spriteBatch);
 
             particleController.Draw(spriteBatch);
-
-
-
 
 
             spriteBatch.End();
@@ -279,7 +284,7 @@ namespace ShiftWorld
             for (int i = 0; i < 3; i++)
             {
                 float leftBox = 96, rightBox = 192, topBox = 0, botBox = 254;
-                float widthDif = (rightBox - leftBox) / 2.2f;
+                float widthDif = (rightBox - leftBox) / 3f;
                 float heightDif = (botBox - topBox) / 4f;
                 float midWidht = (rightBox + leftBox) / 2 - widthDif;
                 float midHeight = (botBox + topBox) / 2 - heightDif;
@@ -358,6 +363,9 @@ namespace ShiftWorld
         private void Reset()
         {
             mapView = map[mapIndex].Bounds;
+
+            killed = false;
+            dyingCountDown = 0;
 
             player.Reset();
             particleController.Reset();

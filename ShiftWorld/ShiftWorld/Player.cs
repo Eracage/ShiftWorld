@@ -40,7 +40,7 @@ namespace ShiftWorld
         public void Update(KeyboardState keyboardState, GameTime gameTime, Vector2 cameraDelta, Vector2 cameraPosition)
         {
             _cameraPos = cameraPosition;
-            _eyesPos = new Vector2(170,80);
+            _eyesPos = new Vector2(170, 80);
 
             movement(keyboardState, gameTime);
 
@@ -57,12 +57,9 @@ namespace ShiftWorld
             _velocity.Y = 0;
             if (_inAir)
             {
-                _hp = 500;
-                _jumpDelayms = 0;
                 _inAir = false;
                 _animator.ChangeAnimation(9, 16, 10, 10f);
                 _animator.AnimationTransition(5, 5, 3, 15);
-                _alive = true;
             }
         }
 
@@ -72,12 +69,14 @@ namespace ShiftWorld
             {
                 _animator.ChangeAnimation(23, 23, 1, 1);
                 _animator.AnimationTransition(20, 20, 4, 6);
+                _alive = false;
             }
-            _alive = false;
         }
 
         public void Reset()
         {
+            _hp = 500;
+            _jumpDelayms = 0;
             _jumping = false;
             _inAir = true;
             _zenithReached = false;
@@ -128,44 +127,46 @@ namespace ShiftWorld
             //{
             //    _inAir = true;
             //}
-
-            _jumpDelayms -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (_jumpDelayms < 0 && _jumping)
+            if (_alive)
             {
-                _inAir = true;
-                _velocity.Y -= 14f;
-                _zenithReached = false;
-                _jumping = false;
-            }
-
-            if (keyboardState.IsKeyDown(Keys.A)) // move left
-                _velocity.X -= _speed * deltaTime;
-            if (keyboardState.IsKeyDown(Keys.D)) // move right
-                _velocity.X += _speed * deltaTime;
-            if (!_inAir)
-            {
-                if (_velocity.Y == gravitation)
+                _jumpDelayms -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                if (_jumpDelayms < 0 && _jumping)
                 {
-                    if (!_jumping)
+                    _inAir = true;
+                    _velocity.Y -= 14f;
+                    _zenithReached = false;
+                    _jumping = false;
+                }
+
+                if (keyboardState.IsKeyDown(Keys.A)) // move left
+                    _velocity.X -= _speed * deltaTime;
+                if (keyboardState.IsKeyDown(Keys.D)) // move right
+                    _velocity.X += _speed * deltaTime;
+                if (!_inAir)
+                {
+                    if (_velocity.Y == gravitation)
                     {
-                        if (keyboardState.IsKeyDown(Keys.W)) // move up
+                        if (!_jumping)
                         {
-                            _animator.ChangeAnimation(4, 4, 1, 0.1f);
-                            _animator.AnimationTransition(1, 1, 4, 15);
-                            _jumpDelayms = 120;
-                            _jumping = true;
+                            if (keyboardState.IsKeyDown(Keys.W)) // move up
+                            {
+                                _animator.ChangeAnimation(4, 4, 1, 0.1f);
+                                _animator.AnimationTransition(1, 1, 4, 15);
+                                _jumpDelayms = 120;
+                                _jumping = true;
+                            }
                         }
                     }
                 }
+                else if (!_zenithReached && _velocity.Y > 0)
+                {
+                    _animator.ChangeAnimation(5, 5, 1, 1);
+                    _animator.AnimationTransition(19, 19, 1, 12f);
+                    _zenithReached = true;
+                }
+                //if (keyboardState.IsKeyDown(Keys.S)) // move down
+                //    _movement.Y += _speed * deltaTime;
             }
-            else if (!_zenithReached && _velocity.Y > 0)
-            {
-                _animator.ChangeAnimation(5, 5, 1, 1);
-                _animator.AnimationTransition(19, 19, 1,12f);
-                _zenithReached = true;
-            }
-            //if (keyboardState.IsKeyDown(Keys.S)) // move down
-            //    _movement.Y += _speed * deltaTime;
 
             _position += _velocity;
         }
