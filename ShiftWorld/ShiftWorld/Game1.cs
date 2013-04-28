@@ -61,6 +61,7 @@ namespace ShiftWorld
         Butterfly butterfly;
         Mist mist;
         Texture2D titlescreen;
+        Texture2D instructions;
         Texture2D credits;
 
         public Game1()
@@ -106,6 +107,7 @@ namespace ShiftWorld
 
             titlescreen = Content.Load<Texture2D>("Textures/title");
             credits = Content.Load<Texture2D>("Textures/credits screen");
+            instructions = Content.Load<Texture2D>("Textures/instructions");
 
 
 
@@ -265,6 +267,12 @@ namespace ShiftWorld
                 case State.Credits:
 
                     spriteBatch.Draw(credits, Vector2.Zero, null, Color.White, 0.0f, Vector2.Zero, 1/0.6f, SpriteEffects.None, 0.1f);
+
+                    break;
+
+                case State.Instructions:
+
+                    spriteBatch.Draw(instructions, Vector2.Zero, null, Color.White, 0.0f, Vector2.Zero, 1 / 0.6f, SpriteEffects.None, 0.1f);
 
                     break;
             }
