@@ -18,7 +18,7 @@ namespace ShiftWorld
     class ObjectController
     {
         Texture2D _barrelTexture;
-        List<Object> RZObjects = new List<Object>();
+        public List<Object> RZObjects = new List<Object>();
 
         public ObjectController(Texture2D barrelTexture)
         {
@@ -34,9 +34,6 @@ namespace ShiftWorld
                 RZObjects.Add(new Object(_barrelTexture, position));
             }
         }
-
-        public void Update(GameTime gameTime)
-        { }
 
         public void Draw(SpriteBatch spriteBatch)
         {

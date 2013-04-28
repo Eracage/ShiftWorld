@@ -37,6 +37,8 @@ namespace ShiftWorld
 
         public void Update(KeyboardState keyboardState, GameTime gameTime, Vector2 cameraDelta)
         {
+            HP(2);
+
             movement(keyboardState, gameTime, cameraDelta);
 
             _animator.Update(gameTime);

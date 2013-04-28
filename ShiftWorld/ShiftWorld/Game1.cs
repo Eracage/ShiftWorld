@@ -219,7 +219,6 @@ namespace ShiftWorld
             particleController.DrawMouse(spriteBatch);
 
 
-
             switch (Game)
             {
                 case State.Menu:
@@ -349,17 +348,14 @@ namespace ShiftWorld
 
         private void HitBoxes(GameTime gameTime)
         {
+            float leftBox = 96, rightBox = 192, topBox = 0, botBox = 254;
+            float widthDif = (rightBox - leftBox) / 2.2f;
+            float heightDif = (botBox - topBox) / 4f;
+            float midWidht = (rightBox + leftBox) / 2 - widthDif;
+            float midHeight = (botBox + topBox) / 2 - heightDif;
 
             for (int i = 0; i < 3; i++)
             {
-                float leftBox = 96, rightBox = 192, topBox = 0, botBox = 254;
-                float widthDif = (rightBox - leftBox) / 2.2f;
-                float heightDif = (botBox - topBox) / 4f;
-                float midWidht = (rightBox + leftBox) / 2 - widthDif;
-                float midHeight = (botBox + topBox) / 2 - heightDif;
-
-
-
                 TileIndexX = (int)(player.Position.X + midWidht + widthDif * i) / map[mapIndex].TileWidth;
                 TileIndexY = (int)(player.Position.Y + botBox) / map[mapIndex].TileHeight;
 
@@ -374,6 +370,7 @@ namespace ShiftWorld
 
                         player.Land();
                     }
+                    
                 }
 
                 TileIndexX = (int)(player.Position.X + midWidht + widthDif * i) / map[mapIndex].TileWidth;
@@ -399,10 +396,6 @@ namespace ShiftWorld
 
                     player.HP((float)-gameTime.ElapsedGameTime.TotalMilliseconds);
                 }
-                else
-                {
-                    player.HP(5);
-                }
 
                 TileIndexX = (int)(player.Position.X + leftBox) / map[mapIndex].TileWidth;
                 TileIndexY = (int)(player.Position.Y + midHeight + heightDif * i) / map[mapIndex].TileHeight;
@@ -415,7 +408,37 @@ namespace ShiftWorld
                         , player.Position.Y);
                 }
             }
+
+            Rectangle playerRectangle = new Rectangle((int)(player.Position.X + leftBox), (int)(player.Position.Y + topBox), (int)(rightBox-leftBox), (int)(botBox-topBox));
+
+            foreach (var o in objectController.RZObjects)
+	        {
+                if (o.Bounds().Intersects(playerRectangle))
+                {
+                    float leftDif = playerRectangle.Right - o.Bounds().Left;
+                    float rightDif = playerRectangle.Left - o.Bounds().Right;
+                    float topDif = playerRectangle.Bottom - o.Bounds().Top;
+                    float bottomDif = playerRectangle.Top - o.Bounds().Bottom;
+
+                    Vector2 diffVector = new Vector2(playerRectangle.Center.X - o.Bounds().Center.X, playerRectangle.Center.Y - o.Bounds().Center.Y);
+
+                    if (0 < topDif && topDif < 40) // Top
+                    {
+                        if (player.Velocity.Y > 0)
+                        {
+                            player.Position = new Vector2(player.Position.X, o.Bounds().Top - botBox);
+                            player.Land();
+                        }
+                    }
+                    else if (0 < leftDif && leftDif < 20) // Left
+                    {
+                        player.Position = new Vector2(o.Bounds().Left - rightBox, player.Position.Y);
+                        player.HP((float)-gameTime.ElapsedGameTime.TotalMilliseconds);
+                    }
+                }
+	        }
         }
+
 
         private int TileIndexX
         {
