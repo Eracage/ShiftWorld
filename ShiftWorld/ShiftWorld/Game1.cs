@@ -54,6 +54,7 @@ namespace ShiftWorld
         Player player;
         Butterfly butterfly;
         Mist mist;
+        Texture2D titlescreen;
 
         public Game1()
         {
@@ -95,6 +96,7 @@ namespace ShiftWorld
             player = new Player(Content.Load<Texture2D>("Textures/character animations"));
             butterfly = new Butterfly(Content.Load<Texture2D>("Textures/butterfly"));
             mist = new Mist(Content.Load<Texture2D>("Textures/sumu"), camera.Zoom);
+            titlescreen = Content.Load<Texture2D>("Textures/title");
 
 
             objectController = new ObjectController(Content.Load<Texture2D>("Textures/BARREL"));
@@ -144,6 +146,7 @@ namespace ShiftWorld
             switch (Game)
             {
                 case State.Menu:
+                    
                     if (keyboardState.IsKeyDown(Keys.Space))
                         SwitchGameState(State.Play);
                     break;
@@ -205,7 +208,6 @@ namespace ShiftWorld
 
             // TODO: Add your drawing code here
 
-
             spriteBatch.Begin(SpriteSortMode.BackToFront,
                         BlendState.NonPremultiplied,
                         null,
@@ -221,18 +223,26 @@ namespace ShiftWorld
             switch (Game)
             {
                 case State.Menu:
+
+                    spriteBatch.End();
+
+                    spriteBatch.Begin(SpriteSortMode.BackToFront,BlendState.NonPremultiplied);
+
+                    spriteBatch.Draw(titlescreen, Vector2.Zero, Color.White);
                     break;
 
                 case State.LevelSelect:
                     break;
 
                 case State.Play:
+
                     DrawMapLayers(spriteBatch, mapIndex);
                     player.Draw(spriteBatch);
                     butterfly.Draw(spriteBatch);
                     mist.Draw(spriteBatch);
                     objectController.Draw(spriteBatch);
                     particleController.Draw(spriteBatch);
+
                     break;
 
                 case State.Credits:
