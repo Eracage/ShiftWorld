@@ -81,6 +81,7 @@
     <Compile Include="Camera.cs" />
     <Compile Include="CursorParticle.cs" />
     <Compile Include="Mist.cs" />
+    <Compile Include="Object.cs" />
     <Compile Include="Particle.cs" />
     <Compile Include="ParticleController.cs" />
     <Compile Include="Player.cs" />

@@ -26,7 +26,7 @@ namespace ShiftWorld
         {
             _texture = texture;
             _zoom = zoom;
-            _position = new Vector2(1280 / zoom, 768 / zoom);
+            _position = Vector2.Zero;//new Vector2(1280 / zoom, 768 / zoom);
         }
 
         public void Update(GameTime gameTime, Vector2 CameraPosition)
@@ -37,7 +37,7 @@ namespace ShiftWorld
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_texture,_position, null, Color.Black, 0, new Vector2(_texture.Width,_texture.Height), (float)(1/_zoom),SpriteEffects.None, 0);
+            spriteBatch.Draw(_texture,_position, null, Color.White, 0, Vector2.Zero, (float)(1/_zoom),SpriteEffects.None, 0);
         }
     }
 }
