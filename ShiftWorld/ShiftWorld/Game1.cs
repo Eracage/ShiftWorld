@@ -34,6 +34,11 @@ namespace ShiftWorld
         KeyboardState keyboardState;
         MouseState mouseState;
 
+        Rectangle StartGame = new Rectangle(950, 560, 320, 35);
+        Rectangle Instructions = new Rectangle(950, 600, 250, 30);
+        Rectangle Credits = new Rectangle(960, 635, 265, 35);
+        Rectangle ExitGame = new Rectangle(970, 678, 105, 40);
+
         ObjectController objectController;
         ParticleController particleController;
         Rectangle mapView;
@@ -104,8 +109,8 @@ namespace ShiftWorld
             map = new List<Map>();
             map.Add(Content.Load<Map>("Maps/testing_map"));
 
-
             Reset();
+            SwitchGameState(State.Menu);
         }
 
         /// <summary>
@@ -148,6 +153,8 @@ namespace ShiftWorld
                 case State.Menu:
                     
                     if (keyboardState.IsKeyDown(Keys.Space))
+                        SwitchGameState(State.Play);
+                    if (StartGame.Contains(mouseState.X, mouseState.Y) && mouseState.LeftButton == ButtonState.Pressed)
                         SwitchGameState(State.Play);
                     break;
 
@@ -224,11 +231,7 @@ namespace ShiftWorld
             {
                 case State.Menu:
 
-                    spriteBatch.End();
-
-                    spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.NonPremultiplied);
-
-                    spriteBatch.Draw(titlescreen, Vector2.Zero, Color.White);
+                    spriteBatch.Draw(titlescreen, Vector2.Zero,null, Color.White,0.0f, Vector2.Zero,1/0.6f,SpriteEffects.None,0.1f);
                     break;
 
                 case State.LevelSelect:
@@ -434,7 +437,7 @@ namespace ShiftWorld
             switch (GameState)
             {
                 case State.Menu:
-                    player.Position = new Vector2(width / 2, height / 2);
+                    player.Position = new Vector2(width * camera.Zoom / 2 - 116, height / 2);
                     Game = State.Menu;
                     break;
 

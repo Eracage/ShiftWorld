@@ -26,9 +26,6 @@ namespace ShiftWorld
         private bool _zenithReached = false;
         private bool _alive = true;
 
-
-        
-
         public Player(Texture2D texture)
         {
             _animator = new Animate(texture, 10, 256, 256, 10f, 9, 0.5f);
@@ -37,6 +34,8 @@ namespace ShiftWorld
 
         public void Update(KeyboardState keyboardState, GameTime gameTime, Vector2 cameraDelta)
         {
+            if (!_alive)
+                cameraDelta = Vector2.Zero;
             movement(keyboardState, gameTime, cameraDelta);
 
             _animator.Update(gameTime);
