@@ -21,7 +21,7 @@ namespace ShiftWorld
             : base(texture,position, direction) 
         { }
 
-        public override bool Update(GameTime gameTime)
+        public bool Update(GameTime gameTime, Vector2 cameraDif)
         {
             _color.X = 1.0f; //Red
             _color.Y = 0.2f; //Green

@@ -20,6 +20,14 @@ namespace ShiftWorld
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+        enum State
+	    {
+            Menu = 0,
+            LevelSelect = 1,
+            Play = 2,
+            Credits = 3
+	    }
+        State Game = State.Menu;
         int width = 1280, height = 768;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -32,6 +40,8 @@ namespace ShiftWorld
         int mapIndex = 0;
         Camera2d camera = new Camera2d();
         Vector2 cameraPos;
+        Vector2 eyesPos = new Vector2(170, 80);
+
         int dontUseThisTileIndexX;
         int dontUseThisTileIndexY;
 
@@ -85,7 +95,7 @@ namespace ShiftWorld
             map = new List<Map>();
             map.Add(Content.Load<Map>("Maps/testing_map"));
 
-            camera.Zoom = 1f;
+            camera.Zoom = 1.0f;
 
             Reset();
         }
@@ -114,47 +124,65 @@ namespace ShiftWorld
             keyboardState = Keyboard.GetState();
             mouseState = Mouse.GetState();
 
-            Vector2 cameraDelta = new Vector2((float)(gameTime.ElapsedGameTime.TotalMilliseconds/1000.0f) * 200,0);
-
-            player.Update(keyboardState, gameTime, cameraDelta, cameraPos);
-
+            Vector2 cameraDelta = new Vector2((float)(gameTime.ElapsedGameTime.TotalMilliseconds / 1000.0f) * 200, 0);
             cameraPos = new Vector2(player.Position.X, map[mapIndex].Height * map[mapIndex].TileHeight / 2.0f);
-
-
-
-            Vector2 RmousePosition = new Vector2(cameraPos.X + (mouseState.X - width/2) /camera.Zoom, cameraPos.Y + (mouseState.Y - height/2) / camera.Zoom);
-
+            camera.Pos = new Vector2((1 / camera.Zoom) * ((int)(cameraPos.X * camera.Zoom)), cameraPos.Y);
             //camera.Pos = new Vector2(cameraPos.X, cameraPos.Y);
-            camera.Pos = new Vector2((1/camera.Zoom)*((int)(cameraPos.X*camera.Zoom)), cameraPos.Y);
+
+            Vector2 RmousePosition = new Vector2(cameraPos.X + (mouseState.X - width / 2) / camera.Zoom, cameraPos.Y + (mouseState.Y - height / 2) / camera.Zoom);
+
+            particleController.UpdateMouse(gameTime, cameraDelta, RmousePosition);
 
 
 
-
-            
-
-
-
-
-            particleController.Update(gameTime, cameraPos, RmousePosition);
-
-            HitBoxes(gameTime);
-
-            Beam(gameTime, RmousePosition);
-
-            dyingCountDown -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            if (player.HP() < 0 || player.Position.Y > (map[mapIndex].Height * map[mapIndex].TileHeight - player.Height))
+            switch (Game)
             {
-                player.Die();
-                if (!killed && dyingCountDown < -1000)
-                {
-                    killed = true;
-                    dyingCountDown = 2000;
-                }
+                case State.Menu:
+                    if (keyboardState.IsKeyDown(Keys.Space))
+                        SwitchGameState(State.Play);
+                    break;
+
+                case State.LevelSelect:
+                    break;
+
+                case State.Play:
+
+                    player.Update(keyboardState, gameTime, cameraDelta);
+
+                    particleController.Update(gameTime, cameraPos, RmousePosition);
+
+                    HitBoxes(gameTime);
+
+                    Beam(gameTime, RmousePosition);
+
+                    dyingCountDown -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+                    if (player.HP() < 0 || player.Position.Y > (map[mapIndex].Height * map[mapIndex].TileHeight - player.Height))
+                    {
+                        player.Die();
+                        if (!killed && dyingCountDown < -1000)
+                        {
+                            killed = true;
+                            dyingCountDown = 2000;
+                        }
+                    }
+                    if (dyingCountDown < 0 && killed)
+                    {
+                        Reset();
+                    }
+
+                    break;
+
+                case State.Credits:
+                    if (keyboardState.IsKeyDown(Keys.Space))
+                        SwitchGameState(State.Menu);
+                    break;
+
+                default:
+                    SwitchGameState(State.Menu);
+                    break;
             }
-            if (dyingCountDown < 0 && killed)
-            {
-                Reset();
-            }
+
+           
 
             base.Update(gameTime);
         }
@@ -169,6 +197,7 @@ namespace ShiftWorld
 
             // TODO: Add your drawing code here
 
+
             spriteBatch.Begin(SpriteSortMode.BackToFront,
                         BlendState.NonPremultiplied,
                         null,
@@ -177,12 +206,31 @@ namespace ShiftWorld
                         null,
                         camera.get_transformation(GraphicsDevice /*Send the variable that has your graphic device here*/));
 
-            DrawMapLayers(spriteBatch, mapIndex);
+            particleController.DrawMouse(spriteBatch);
 
-            player.Draw(spriteBatch);
 
-            particleController.Draw(spriteBatch);
 
+            switch (Game)
+            {
+                case State.Menu:
+                    break;
+
+                case State.LevelSelect:
+                    break;
+
+                case State.Play:
+                    DrawMapLayers(spriteBatch, mapIndex);
+                    player.Draw(spriteBatch);
+                    particleController.Draw(spriteBatch);
+                    break;
+
+                case State.Credits:
+                    break;
+            }
+
+
+
+            particleController.DrawMouse(spriteBatch);
 
             spriteBatch.End();
 
@@ -268,12 +316,12 @@ namespace ShiftWorld
                 if (mouseState.LeftButton == ButtonState.Pressed)
                 {
                     beamCooldown = 0;
-                    particleController.AddBeam(player.Position, direction, true);
+                    particleController.AddBeam(player.Position + eyesPos, direction, true);
                 }
                 else if (mouseState.RightButton == ButtonState.Pressed)
                 {
                     beamCooldown = 0;
-                    particleController.AddBeam(player.Position, direction, false);
+                    particleController.AddBeam(player.Position + eyesPos, direction, false);
                 }
             }
         }
@@ -284,7 +332,7 @@ namespace ShiftWorld
             for (int i = 0; i < 3; i++)
             {
                 float leftBox = 96, rightBox = 192, topBox = 0, botBox = 254;
-                float widthDif = (rightBox - leftBox) / 3f;
+                float widthDif = (rightBox - leftBox) / 2.2f;
                 float heightDif = (botBox - topBox) / 4f;
                 float midWidht = (rightBox + leftBox) / 2 - widthDif;
                 float midHeight = (botBox + topBox) / 2 - heightDif;
@@ -369,6 +417,26 @@ namespace ShiftWorld
 
             player.Reset();
             particleController.Reset();
+        }
+
+        private void SwitchGameState(State GameState)
+        {
+            switch (GameState)
+            {
+                case State.Menu:
+                    player.Position = new Vector2(width / 2, height / 2);
+                    Game = State.Menu;
+                    break;
+
+                case State.Play:
+                    Reset();
+                    Game = State.Play;
+                    break;
+
+                case State.Credits:
+                    Game = State.Credits;
+                    break;
+            }
         }
     }
 }

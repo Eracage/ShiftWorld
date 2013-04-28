@@ -34,24 +34,29 @@ namespace ShiftWorld
         public void Update(GameTime gameTime, Vector2 cameraPosition, Vector2 MouseRtCamera)
         { 
             _cameraPosition = cameraPosition;
+            
+            for (int i = (_beam.Count - 1); i >= 0; --i)
+            {
+                if (_beam[i].Update(gameTime))
+                    _beam.RemoveAt(i);
+            }
+        }
+
+        public void UpdateMouse(GameTime gameTime, Vector2 cameraDif, Vector2 MouseRtCamera)
+        {
+            _cameraPosition = cameraDif;
 
             //_timer -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             //if (_timer < 0)
             //{
             //    _timer += 50;
-                _cursor.Add(new CursorParticle(_particleTexture, MouseRtCamera, Vector2.Zero));
+            _cursor.Add(new CursorParticle(_particleTexture, MouseRtCamera, Vector2.Zero));
             //}
-            
-            for (int i = (_cursor.Count - 1); i >= 0; --i )
-            {
-                if (_cursor[i].Update(gameTime))
-                    _cursor.RemoveAt(i);
-            }
 
-            for (int i = (_beam.Count - 1); i >= 0; --i)
+            for (int i = (_cursor.Count - 1); i >= 0; --i)
             {
-                if (_beam[i].Update(gameTime))
-                    _beam.RemoveAt(i);
+                if (_cursor[i].Update(gameTime, cameraDif))
+                    _cursor.RemoveAt(i);
             }
         }
 
@@ -62,12 +67,15 @@ namespace ShiftWorld
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            foreach (var particle in _cursor)
+            foreach (var particle in _beam)
             {
                 particle.Draw(spriteBatch);
             }
+        }
 
-            foreach (var particle in _beam)
+        public void DrawMouse(SpriteBatch spriteBatch)
+        {
+            foreach (var particle in _cursor)
             {
                 particle.Draw(spriteBatch);
             }

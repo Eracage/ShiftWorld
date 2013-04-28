@@ -17,8 +17,6 @@ namespace ShiftWorld
     {
         private Animate _animator;
         private Vector2 _position;
-        private Vector2 _eyesPos;
-        private Vector2 _cameraPos;
         private Vector2 _velocity = Vector2.Zero;
         private float _speed = 100;
         private float _hp = 500;
@@ -37,12 +35,9 @@ namespace ShiftWorld
             Reset();
         }
 
-        public void Update(KeyboardState keyboardState, GameTime gameTime, Vector2 cameraDelta, Vector2 cameraPosition)
+        public void Update(KeyboardState keyboardState, GameTime gameTime, Vector2 cameraDelta)
         {
-            _cameraPos = cameraPosition;
-            _eyesPos = new Vector2(170, 80);
-
-            movement(keyboardState, gameTime);
+            movement(keyboardState, gameTime, cameraDelta);
 
             _animator.Update(gameTime);
         }
@@ -116,12 +111,12 @@ namespace ShiftWorld
 
         // Private functions
 
-        private void movement(KeyboardState keyboardState, GameTime gameTime)
+        private void movement(KeyboardState keyboardState, GameTime gameTime, Vector2 cameraDelta)
         {
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalMilliseconds / 1000f;
             float gravitation = deltaTime * 30;
             _velocity.Y += gravitation;
-            _velocity.X = deltaTime * 180;
+            _velocity.X = cameraDelta.X;
 
             //if (_velocity.Y > gravitation)
             //{
@@ -148,7 +143,7 @@ namespace ShiftWorld
                     {
                         if (!_jumping)
                         {
-                            if (keyboardState.IsKeyDown(Keys.W)) // move up
+                            if (keyboardState.IsKeyDown(Keys.W) || keyboardState.IsKeyDown(Keys.Space)) // move up
                             {
                                 _animator.ChangeAnimation(4, 4, 1, 0.1f);
                                 _animator.AnimationTransition(1, 1, 4, 15);
