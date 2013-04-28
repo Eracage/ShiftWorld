@@ -159,8 +159,6 @@ namespace ShiftWorld
             {
                 case State.Menu:
                     
-                    if (keyboardState.IsKeyDown(Keys.Space))
-                        SwitchGameState(State.Play);
                     if (StartGame.Contains(mouseState.X, mouseState.Y) && mouseState.LeftButton == ButtonState.Pressed)
                         SwitchGameState(State.Play);
                     if (Instructions.Contains(mouseState.X, mouseState.Y) && mouseState.LeftButton == ButtonState.Pressed)
@@ -209,7 +207,10 @@ namespace ShiftWorld
                         SwitchGameState(State.Menu);
                     break;
 
-
+                case State.Instructions:
+                    if (keyboardState.IsKeyDown(Keys.Space))
+                        SwitchGameState(State.Menu);
+                    break;
 
                 default:
                     SwitchGameState(State.Menu);
@@ -473,6 +474,10 @@ namespace ShiftWorld
 
                 case State.Credits:
                     Game = State.Credits;
+                    break;
+
+                case State.Instructions:
+                    Game = State.Instructions;
                     break;
             }
         }
