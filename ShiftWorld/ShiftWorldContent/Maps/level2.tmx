@@ -5,12 +5,12 @@
  </tileset>
  <layer name="Tile Layer 1" width="64" height="10">
   <data encoding="base64" compression="zlib">
-   eJztks0KgDAMg6fsR0F9/8c1BwNS2m3qYR4a+C5b2yWjIbhcLpfrrWawgGm0kZ9qAxmslXvtjn1E1vDf5d+zb+/wlhUsn5qnVi76KCAadQkcyqx09RGrX5vXq6Jwf0futvTUyvW0Lhrno/LXvH7NL/djRP4TqY8CxQ==
+   eJztUssOwCAIc4vukWz7/88dFxPTFNg86IUmvQjUlpBSIBAIBHqxCg/hMtsI4BJuDkf6OI06q6F/7Kl7x93XuVu4O2Q70XwyT16u1kdW+orwIVoFvGrzTM/LbbH9B2+baVu5/vZl5X1W/i/avfnZnY7O/wIuyAQL
   </data>
  </layer>
  <objectgroup name="Object Layer 1" width="64" height="10">
-  <object name="BarrelL" x="1920" y="896"/>
-  <object name="BarrelS" x="4012" y="1152" width="40" height="42"/>
+  <object name="Barrel" x="1920" y="896"/>
+  <object name="Barrel" x="4012" y="1152" width="40" height="42"/>
   <object name="Barrel" x="6067" y="768"/>
  </objectgroup>
 </map>
