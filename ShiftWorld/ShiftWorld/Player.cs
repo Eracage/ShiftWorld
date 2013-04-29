@@ -132,7 +132,7 @@ namespace ShiftWorld
                 if (_jumpDelayms < 0 && _jumping)
                 {
                     _inAir = true;
-                    _velocity.Y -= 10f;
+                    _velocity.Y -= 13f;
                     _zenithReached = false;
                     _jumping = false;
                 }
