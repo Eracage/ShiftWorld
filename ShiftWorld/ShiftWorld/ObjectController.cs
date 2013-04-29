@@ -25,11 +25,23 @@ namespace ShiftWorld
             _barrelTexture = barrelTexture;
         }
 
-        public void AddObject(int type, Vector2 position, float size)
+        public void AddObject(Resizable type, Vector2 position)
         {
-            if (type == 1)
+            switch (type)
             {
-                RZObjects.Add(new Object(_barrelTexture, position, size));
+                case Resizable.Nothing:
+                    break;
+                case Resizable.BarrelS:
+                    RZObjects.Add(new Object(_barrelTexture, position, Size.Small));
+                    break;
+                case Resizable.BarrelM:
+                    RZObjects.Add(new Object(_barrelTexture, position, Size.Medium));
+                    break;
+                case Resizable.BarrelL:
+                    RZObjects.Add(new Object(_barrelTexture, position, Size.Large));
+                    break;
+                default:
+                    break;
             }
         }
 

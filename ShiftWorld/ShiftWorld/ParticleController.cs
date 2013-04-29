@@ -67,6 +67,20 @@ namespace ShiftWorld
             _beam.Add(new BeamParticle(_particleTexture, position, direction, minimalism));
         }
 
+        public int CheckBeamHit(Rectangle Resizable)
+        {
+            foreach (var item in _beam)
+	        {
+                if (Resizable.Contains((int)item.Position.X, (int)item.Position.Y))
+                {
+                    if (item.Type)
+                        return -1;
+                    return 1;
+                }
+	        }
+            return 0;
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             foreach (var particle in _beam)

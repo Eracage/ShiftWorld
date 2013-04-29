@@ -25,6 +25,16 @@ namespace ShiftWorld
             _minimalism = minimalism;
         }
 
+        public Vector2 Position
+        {
+            get { return _position; }
+        }
+
+        public bool Type
+        {
+            get { return _minimalism; }
+        }
+
         public override bool Update(GameTime gameTime)
         {
             if (_minimalism)

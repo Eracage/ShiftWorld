@@ -21,6 +21,15 @@ namespace ShiftWorld
         Medium = 2,
         Large = 4
     }
+
+    enum Resizable
+    {
+        Nothing = 0,
+        BarrelS = 1,
+        BarrelM = 2,
+        BarrelL = 3
+    }
+
     /// <summary>
     /// This is the main type for your game
     /// </summary>
@@ -489,6 +498,16 @@ namespace ShiftWorld
                 {
                     HitboxMoveplayer(o.Bounds(),gameTime);
                 }
+
+                int change = particleController.CheckBeamHit(o.Bounds());
+                if (change == -1)
+                {
+                    o.ChangeSize(true);
+                }
+                else if (change == 1)
+                {
+                    o.ChangeSize(false);
+                }
 	        }
         }
 
@@ -553,6 +572,36 @@ namespace ShiftWorld
             }
         }
 
+        private void SetMapobjects()
+        {
+            foreach (var l in map[mapIndex].ObjectLayers)
+            {
+                foreach (var o in l.MapObjects)
+                {
+                    Resizable prop = Resizable.Nothing;
+
+                    switch (o.Name)
+                    {
+                        case "BarrelS":
+                            prop = Resizable.BarrelS;
+                            break;
+                        case "BarrelM":
+                            prop = Resizable.BarrelM;
+                            break;
+                        case "BarrelL":
+                            prop = Resizable.BarrelL;
+                            break;
+                        default:
+                            prop = Resizable.Nothing;
+                            break;
+                    }
+
+
+                    objectController.AddObject(prop, new Vector2(o.Bounds.X, o.Bounds.Y + 4));
+                }
+            }
+        }
+
         private void Reset()
         {
             mapView = map[mapIndex].Bounds;
@@ -564,16 +613,7 @@ namespace ShiftWorld
             particleController.Reset();
 
             objectController.Reset();
-            foreach (var l in map[mapIndex].ObjectLayers)
-            {
-                foreach (var o in l.MapObjects)
-                {
-                    if (o.Name == "Barrel")
-                    {
-                        objectController.AddObject(1, new Vector2(o.Bounds.X, o.Bounds.Y) ,(float)Size.Large);
-                    }
-                }
-            }
+            SetMapobjects();
         }
     }
 }

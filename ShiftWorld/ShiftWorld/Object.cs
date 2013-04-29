@@ -22,11 +22,11 @@ namespace ShiftWorld
         float _size;
         float _delayedSize;
 
-        public Object(Texture2D texture, Vector2 position, float size)
+        public Object(Texture2D texture, Vector2 position, Size size)
         {
             _texture = texture;
             _position = position;
-            _delayedSize = _size = size;
+            _delayedSize = _size = (float)size;
         }
 
         public void ChangeSize(bool minimalise)
