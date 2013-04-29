@@ -59,7 +59,7 @@ namespace ShiftWorld
         ParticleController particleController;
         Rectangle mapView;
         public List<Map> map;
-        int mapIndex = 0;
+        int mapIndex = 1;
         Camera2d camera = new Camera2d();
         Vector2 cameraPos;
         Vector2 eyesPos = new Vector2(170, 80);
@@ -224,6 +224,7 @@ namespace ShiftWorld
                     mist.Update(gameTime,camera.Pos);
 
                     particleController.Update(gameTime, cameraPos, RmousePosition);
+                    objectController.Update(gameTime);
 
                     HitBoxes(gameTime);
 
@@ -502,6 +503,7 @@ namespace ShiftWorld
                 int change = particleController.CheckBeamHit(o.Bounds());
                 if (change == -1)
                 {
+                    objectController.RZObjects[0].ChangeSize(true);
                     o.ChangeSize(true);
                 }
                 else if (change == 1)
