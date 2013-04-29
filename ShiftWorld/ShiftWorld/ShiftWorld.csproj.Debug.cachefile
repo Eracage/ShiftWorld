@@ -4,16 +4,14 @@ Content\Textures\character animations.xnb
 Content\Maps\Laatikko_testing.xnb
 Content\Maps\Lankku_testing.xnb
 Content\Maps\Perusblokki_testing.xnb
-Content\Maps\testing_map.xnb
-Content\Maps\testing_map\00.xnb
 Content\Textures\Particle.xnb
 Content\Textures\butterfly.xnb
 Content\Textures\sumu.xnb
-Content\Maps\testing_map\01.xnb
 Content\Textures\BARREL.xnb
 Content\Textures\title.xnb
 Content\Textures\credits screen.xnb
 Content\Textures\instructions.xnb
+Content\Maps\testing_map.xnb
 Content\SoundEffects\Death.xnb
 Content\SoundEffects\expand.xnb
 Content\SoundEffects\Fall_Down.xnb
@@ -21,3 +19,7 @@ Content\SoundEffects\Jump.xnb
 Content\SoundEffects\Running.xnb
 Content\SoundEffects\Shoot.xnb
 Content\SoundEffects\Shoot2.xnb
+Content\Maps\testing_map\00.xnb
+Content\Maps\testing_map\01.xnb
+Content\Textures\kenttä1_1.xnb
+Content\Textures\kenttä1_2.xnb

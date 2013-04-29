@@ -60,9 +60,12 @@ namespace ShiftWorld
         Player player;
         Butterfly butterfly;
         Mist mist;
+
         Texture2D titlescreen;
         Texture2D instructions;
         Texture2D credits;
+        Texture2D background_level1_1;
+        Texture2D background_level1_2;
 
         public Game1()
         {
@@ -108,6 +111,9 @@ namespace ShiftWorld
             titlescreen = Content.Load<Texture2D>("Textures/title");
             credits = Content.Load<Texture2D>("Textures/credits screen");
             instructions = Content.Load<Texture2D>("Textures/instructions");
+
+            background_level1_1 = Content.Load<Texture2D>("Textures/kenttä1_1");
+            background_level1_2 = Content.Load<Texture2D>("Textures/kenttä1_2");
 
 
 
@@ -255,12 +261,16 @@ namespace ShiftWorld
 
                 case State.Play:
 
+                    spriteBatch.Draw(background_level1_1, new Vector2(0,0), null, Color.White, 0.0f, Vector2.Zero, 1 / 0.6f, SpriteEffects.None, 1.0f);
+                    spriteBatch.Draw(background_level1_2, new Vector2(2047/0.6f, 0), null, Color.White, 0.0f, Vector2.Zero, 1 / 0.6f, SpriteEffects.None, 1.0f);
+                    
                     DrawMapLayers(spriteBatch, mapIndex);
                     player.Draw(spriteBatch);
                     butterfly.Draw(spriteBatch);
                     mist.Draw(spriteBatch);
                     objectController.Draw(spriteBatch);
                     particleController.Draw(spriteBatch);
+                    
 
                     break;
 
