@@ -81,6 +81,10 @@ namespace ShiftWorld
         Texture2D credits;
         Texture2D background_level1_1;
         Texture2D background_level1_2;
+        Texture2D background_level2_1;
+        Texture2D background_level2_2;
+        Texture2D background_level2_3;
+        Texture2D background_level2_4;
 
         // Hitbox Variables
         Rectangle playerRectangle = Rectangle.Empty;
@@ -136,6 +140,10 @@ namespace ShiftWorld
 
             background_level1_1 = Content.Load<Texture2D>("Textures/kenttä1_1");
             background_level1_2 = Content.Load<Texture2D>("Textures/kenttä1_2");
+            background_level2_1 = Content.Load<Texture2D>("Textures/kenttä2_1");
+            background_level2_2 = Content.Load<Texture2D>("Textures/kenttä2_2");
+            background_level2_3 = Content.Load<Texture2D>("Textures/kenttä2_3");
+            background_level2_4 = Content.Load<Texture2D>("Textures/kenttä2_4");
 
 
 
