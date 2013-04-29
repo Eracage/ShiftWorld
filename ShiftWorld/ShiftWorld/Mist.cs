@@ -18,7 +18,7 @@ namespace ShiftWorld
     class Mist
     {
         Texture2D _texture;
-        Vector2 _position = new Vector2(0);
+        public Vector2 _position = new Vector2(0);
         Vector2 _movement = new Vector2(-100,0);
         float _zoom;
 
@@ -26,7 +26,7 @@ namespace ShiftWorld
         {
             _texture = texture;
             _zoom = zoom;
-            _position = Vector2.Zero;//new Vector2(1280 / zoom, 768 / zoom);
+            _position = Vector2.Zero;
         }
 
         public void Update(GameTime gameTime, Vector2 CameraPosition)
@@ -37,7 +37,11 @@ namespace ShiftWorld
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_texture,_position, null, Color.White, 0, Vector2.Zero, (float)(1/_zoom),SpriteEffects.None, 0);
+            for (int i = 0; i < 5; i++)
+            {
+                spriteBatch.Draw(_texture, _position + new Vector2(2*i * 1280 / _zoom, 0), null, Color.White, 0, Vector2.Zero, (float)(1 / _zoom), SpriteEffects.None, 0);
+                spriteBatch.Draw(_texture, _position + new Vector2((2*i+1) * 1280 / _zoom, 0), null, Color.White, 0, Vector2.Zero, (float)(1 / _zoom), SpriteEffects.FlipHorizontally, 0);
+            }
         }
     }
 }
