@@ -134,7 +134,7 @@ namespace ShiftWorld
             particleController = new ParticleController(Content.Load<Texture2D>("Textures/Particle"), Content.Load<Texture2D>("Textures/sumu"));
             map = new List<Map>();
             map.Add(Content.Load<Map>("Maps/testing_map"));
-            map.Add(Content.Load<Map>("Maps/testing_map"));
+            map.Add(Content.Load<Map>("Maps/level2"));
             map.Add(Content.Load<Map>("Maps/testing_map"));
 
             Reset();
@@ -174,7 +174,7 @@ namespace ShiftWorld
 
             particleController.UpdateMouse(gameTime, cameraDelta, RmousePosition);
 
-            if (player.Position.X > map[mapIndex].Width * map[mapIndex].TileWidth - player.Height)
+            if (player.Position.X > map[mapIndex].Width * map[mapIndex].TileWidth)
             {
                 mapIndex++;
 

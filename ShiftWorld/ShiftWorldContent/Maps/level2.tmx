@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="64" height="10" tilewidth="128" tileheight="128">
+ <tileset firstgid="1" name="tiles_spritesheet" tilewidth="128" tileheight="128" spacing="2" margin="1">
+  <image source="tiles_spritesheet.png" width="1040" height="260"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="64" height="10">
+  <data encoding="base64" compression="zlib">
+   eJztkksKgDAMRKv0o6De/7iOYEBC0qJZxEUG3qZJ2pnQlEKhUCj0VTNYwORt5KfaQAVrpy7VaI7gPbR3y+6rgOZT8jTKddV30EBW+go4hLvKPUdo8xY1gec7/G9zT6Ncb/uycu6Vv+fVmp//D4/8JzYnApc=
+  </data>
+ </layer>
+ <objectgroup name="Object Layer 1" width="64" height="10">
+  <object name="BarrelL" x="1920" y="896"/>
+  <object name="BarrelS" x="4012" y="1152" width="40" height="42"/>
+  <object name="Barrel" x="6067" y="768"/>
+ </objectgroup>
+</map>
