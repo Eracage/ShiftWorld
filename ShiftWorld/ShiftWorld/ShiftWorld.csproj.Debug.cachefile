@@ -21,3 +21,8 @@ Content\SoundEffects\Shoot.xnb
 Content\SoundEffects\Shoot2.xnb
 Content\Maps\testing_map\00.xnb
 Content\Maps\testing_map\01.xnb
+<<<<<<< HEAD
+=======
+Content\Textures\kenttä1_1.xnb
+Content\Textures\kenttä1_2.xnb
+>>>>>>> Draws background in two parts
