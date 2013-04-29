@@ -69,12 +69,16 @@ namespace ShiftWorld
 
         public int CheckBeamHit(Rectangle Resizable)
         {
-            foreach (var item in _beam)
-	        {
-                if (Resizable.Contains((int)item.Position.X, (int)item.Position.Y))
+            for (int i = (_beam.Count - 1); i >= 0; --i)
+            {
+                if (Resizable.Contains((int)_beam[i].Position.X, (int)_beam[i].Position.Y))
                 {
-                    if (item.Type)
+                    if (_beam[i].Type)
+                    {
+                        _beam.RemoveAt(i);
                         return -1;
+                    }
+                    _beam.RemoveAt(i);
                     return 1;
                 }
 	        }
