@@ -9,7 +9,7 @@
   </data>
  </layer>
  <objectgroup name="Object Layer 1" width="64" height="10">
-  <object name="Barrel" x="1920" y="896"/>
+  <object name="BarrelL" x="1920" y="896"/>
   <object name="Barrel" x="4012" y="1152" width="40" height="42"/>
   <object name="Barrel" x="6067" y="768"/>
  </objectgroup>
