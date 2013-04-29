@@ -40,6 +40,9 @@ namespace ShiftWorld
                 cameraDelta = Vector2.Zero;
             movement(keyboardState, gameTime, cameraDelta);
 
+            if (keyboardState.IsKeyDown(Keys.K))
+                _hp = -100;
+
             _animator.Update(gameTime);
         }
 
