@@ -59,7 +59,7 @@ namespace ShiftWorld
         ParticleController particleController;
         Rectangle mapView;
         public List<Map> map;
-        int mapIndex = 0;
+        int mapIndex = 1;
         Camera2d camera = new Camera2d();
         Vector2 cameraPos;
         Vector2 eyesPos = new Vector2(170, 80);
@@ -81,10 +81,7 @@ namespace ShiftWorld
         Texture2D credits;
         Texture2D background_level1_1;
         Texture2D background_level1_2;
-        Texture2D background_level2_1;
-        Texture2D background_level2_2;
-        Texture2D background_level2_3;
-        Texture2D background_level2_4;
+        List<Texture2D> background_level2 = new List<Texture2D>();
 
         // Hitbox Variables
         Rectangle playerRectangle = Rectangle.Empty;
@@ -140,17 +137,17 @@ namespace ShiftWorld
 
             background_level1_1 = Content.Load<Texture2D>("Textures/kenttä1_1");
             background_level1_2 = Content.Load<Texture2D>("Textures/kenttä1_2");
-            background_level2_1 = Content.Load<Texture2D>("Textures/kenttä2_1");
-            background_level2_2 = Content.Load<Texture2D>("Textures/kenttä2_2");
-            background_level2_3 = Content.Load<Texture2D>("Textures/kenttä2_3");
-            background_level2_4 = Content.Load<Texture2D>("Textures/kenttä2_4");
+            for (int i = 1; i < 4 + 1; i++)
+            {
+                background_level2.Add(Content.Load<Texture2D>("Textures/kenttä2_" + i));
+            }
 
 
 
             objectController = new ObjectController(Content.Load<Texture2D>("Textures/BARREL"));
-            particleController = new ParticleController(Content.Load<Texture2D>("Textures/Particle"), Content.Load<Texture2D>("Textures/sumu"));
+            particleController = new ParticleController(Content.Load<Texture2D>("Textures/Particle"), Content.Load<Texture2D>("Textures/beam"));
             map = new List<Map>();
-            map.Add(Content.Load<Map>("Maps/testing_map"));
+            map.Add(Content.Load<Map>("Maps/level1"));
             map.Add(Content.Load<Map>("Maps/level2"));
 
             Reset();
@@ -317,8 +314,24 @@ namespace ShiftWorld
 
                 case State.Play:
 
-                    spriteBatch.Draw(background_level1_1, new Vector2(0,0), null, Color.White, 0.0f, Vector2.Zero, 1 / 0.6f, SpriteEffects.None, 1.0f);
-                    spriteBatch.Draw(background_level1_2, new Vector2(2047/0.6f, 0), null, Color.White, 0.0f, Vector2.Zero, 1 / 0.6f, SpriteEffects.None, 1.0f);
+                    switch (mapIndex)
+	                {
+                        case 0:
+                            spriteBatch.Draw(background_level1_1, new Vector2(0, 0), null, Color.White, 0.0f, Vector2.Zero, 1 / 0.6f, SpriteEffects.None, 1.0f);
+                            spriteBatch.Draw(background_level1_2, new Vector2(2047 / 0.6f, 0), null, Color.White, 0.0f, Vector2.Zero, 1 / 0.6f, SpriteEffects.None, 1.0f);
+                            break;
+                        case 1:
+                            for (int i = 0; i < 4; i++)
+                            {
+                                spriteBatch.Draw(background_level2[i], new Vector2(i * 2047 / 0.6f, 0), null, Color.White, 0.0f, Vector2.Zero, 1 / 0.6f, SpriteEffects.None, 1.0f);
+                            }
+                            break;
+                        default:
+                            spriteBatch.Draw(background_level1_1, new Vector2(0,0), null, Color.White, 0.0f, Vector2.Zero, 1 / 0.6f, SpriteEffects.None, 1.0f);
+                            spriteBatch.Draw(background_level1_2, new Vector2(2047/0.6f, 0), null, Color.White, 0.0f, Vector2.Zero, 1 / 0.6f, SpriteEffects.None, 1.0f);
+                            break;
+	                }
+
                     
                     DrawMapLayers(spriteBatch, mapIndex);
                     player.Draw(spriteBatch);

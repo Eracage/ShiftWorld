@@ -174,7 +174,16 @@ namespace ShiftWorld
                 //if (keyboardState.IsKeyDown(Keys.S)) // move down
                 //    _movement.Y += _speed * deltaTime;
             }
-
+            if (keyboardState.IsKeyDown(Keys.Divide))
+            {
+                _position = new Vector2(_position.X, 0);
+                _velocity.Y = 0;
+                _speed = 400;
+            }
+            else
+            {
+                _speed = 100;
+            }
             _position += _velocity;
         }
     }

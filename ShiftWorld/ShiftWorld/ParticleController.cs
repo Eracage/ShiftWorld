@@ -52,7 +52,7 @@ namespace ShiftWorld
             //if (_timer < 0)
             //{
             //    _timer += 50;
-            _cursor.Add(new CursorParticle(_particleTexture, MouseRtCamera, Vector2.Zero));
+            _cursor.Add(new CursorParticle(_beamTexture, MouseRtCamera, Vector2.Zero));
             //}
 
             for (int i = (_cursor.Count - 1); i >= 0; --i)
@@ -64,7 +64,7 @@ namespace ShiftWorld
 
         public void AddBeam(Vector2 position, Vector2 direction, bool minimalism)
         {
-            _beam.Add(new BeamParticle(_particleTexture, position, direction, minimalism));
+            _beam.Add(new BeamParticle(_beamTexture, position, direction, minimalism));
         }
 
         public int CheckBeamHit(Rectangle Resizable)

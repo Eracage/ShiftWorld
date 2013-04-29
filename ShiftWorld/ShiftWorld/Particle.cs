@@ -56,7 +56,7 @@ namespace ShiftWorld
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_texture,_position, null, new Color(_color),0, new Vector2(_texture.Width/2),_scale,SpriteEffects.None, _depth);
+            spriteBatch.Draw(_texture,_position, null, new Color(_color),0, new Vector2(_texture.Width/2),_scale/4,SpriteEffects.None, _depth);
         }
     }
 }

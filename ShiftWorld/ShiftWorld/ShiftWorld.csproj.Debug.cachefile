@@ -1,27 +1,22 @@
-Content\Maps\Laatikko_testing.xnb
-Content\Maps\Lankku_testing.xnb
-Content\Maps\Perusblokki_testing.xnb
-Content\Textures\Particle.xnb
-Content\Textures\butterfly.xnb
-Content\Textures\sumu.xnb
-Content\Maps\testing_map.xnb
-Content\SoundEffects\Death.xnb
-Content\SoundEffects\expand.xnb
-Content\SoundEffects\Fall_Down.xnb
-Content\SoundEffects\Jump.xnb
-Content\SoundEffects\Running.xnb
-Content\SoundEffects\Shoot.xnb
-Content\SoundEffects\Shoot2.xnb
-Content\Maps\testing_map\00.xnb
-Content\Maps\testing_map\01.xnb
-Content\Maps\level2.xnb
-Content\Maps\level2\00.xnb
 Content\Textures\character size.xnb
 Content\Textures\character Run.xnb
 Content\Textures\character animations.xnb
+Content\Textures\Particle.xnb
+Content\Textures\butterfly.xnb
+Content\Textures\sumu.xnb
 Content\Textures\BARREL.xnb
 Content\Textures\title.xnb
 Content\Textures\credits screen.xnb
 Content\Textures\instructions.xnb
 Content\Textures\kenttä1_1.xnb
 Content\Textures\kenttä1_2.xnb
+Content\Maps\level2.xnb
+Content\Maps\level2\00.xnb
+Content\Textures\kenttä2_1.xnb
+Content\Textures\kenttä2_2.xnb
+Content\Textures\kenttä2_3.xnb
+Content\Textures\kenttä2_4.xnb
+Content\Maps\level1.xnb
+Content\Maps\level1\00.xnb
+Content\Maps\level1\01.xnb
+Content\Textures\beam.xnb
