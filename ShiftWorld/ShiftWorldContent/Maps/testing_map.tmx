@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="30" height="10" tilewidth="128" tileheight="128">
+<map version="1.0" orientation="orthogonal" width="64" height="10" tilewidth="128" tileheight="128">
  <tileset firstgid="1" name="tiles_spritesheet" tilewidth="128" tileheight="128">
   <image source="tiles_spritesheet.png" width="1040" height="260"/>
  </tileset>
  <tileset firstgid="17" name="tiles_spritesheet" tilewidth="128" tileheight="128" spacing="2" margin="1">
   <image source="tiles_spritesheet.png" width="1040" height="260"/>
  </tileset>
- <layer name="Tile Layer 1" width="30" height="10">
+ <layer name="Tile Layer 1" width="64" height="10">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo4A8IAPEYjgwtYAQEEsAsSCSmCgQi+PA5ACYPyQJqMNnL7YwQDYPW1jJQvWKUGAvNixCpN6haC8ApFQH+Q==
+   eJxjYBgFo2AUjAL6ARkgFsOBhxsQAmIJIBZEEhMFYnEceCgDWLxKElA3mPyPKx1iw8j+wpaGZRkgfhAhYOdg8j8ud2DDyP7C54dR/+MHg8n/ACmtCZE=
   </data>
  </layer>
- <objectgroup name="Object Layer 1" width="30" height="10">
-  <object name="Barrel" x="510" y="896"/>
-  <object name="Barrel" x="605" y="896"/>
+ <objectgroup name="Object Layer 1" width="64" height="10">
+  <object name="Barrel" x="1278" y="896"/>
+  <object name="Barrel" x="1373" y="896"/>
  </objectgroup>
 </map>

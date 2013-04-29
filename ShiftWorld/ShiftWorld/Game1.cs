@@ -43,7 +43,7 @@ namespace ShiftWorld
         ObjectController objectController;
         ParticleController particleController;
         Rectangle mapView;
-        List<Map> map;
+        public List<Map> map;
         int mapIndex = 0;
         Camera2d camera = new Camera2d();
         Vector2 cameraPos;
@@ -121,9 +121,11 @@ namespace ShiftWorld
             particleController = new ParticleController(Content.Load<Texture2D>("Textures/Particle"), Content.Load<Texture2D>("Textures/sumu"));
             map = new List<Map>();
             map.Add(Content.Load<Map>("Maps/testing_map"));
+            map.Add(Content.Load<Map>("Maps/testing_map"));
+            map.Add(Content.Load<Map>("Maps/testing_map"));
 
             Reset();
-            SwitchGameState(State.Menu);
+            ChangeGameState(State.Menu);
         }
 
         /// <summary>
@@ -159,6 +161,20 @@ namespace ShiftWorld
 
             particleController.UpdateMouse(gameTime, cameraDelta, RmousePosition);
 
+            if (player.Position.X > map[mapIndex].Width * map[mapIndex].TileWidth - player.Height)
+            {
+                mapIndex++;
+
+                if (mapIndex > map.Count - 1)
+                {
+                    ChangeGameState(State.Menu);
+                    mapIndex = map.Count - 1;
+                }
+                else
+                {
+                    Reset();
+                }
+            }
 
 
             switch (Game)
@@ -166,11 +182,11 @@ namespace ShiftWorld
                 case State.Menu:
                     
                     if (StartGame.Contains(mouseState.X, mouseState.Y) && mouseState.LeftButton == ButtonState.Pressed)
-                        SwitchGameState(State.Play);
+                        ChangeGameState(State.Play);
                     if (Instructions.Contains(mouseState.X, mouseState.Y) && mouseState.LeftButton == ButtonState.Pressed)
-                        SwitchGameState(State.Instructions);
+                        ChangeGameState(State.Instructions);
                     if (Credits.Contains(mouseState.X, mouseState.Y) && mouseState.LeftButton == ButtonState.Pressed)
-                        SwitchGameState(State.Credits);
+                        ChangeGameState(State.Credits);
                     if (ExitGame.Contains(mouseState.X, mouseState.Y) && mouseState.LeftButton == ButtonState.Pressed)
                         Exit();
 
@@ -210,16 +226,16 @@ namespace ShiftWorld
 
                 case State.Credits:
                     if (keyboardState.IsKeyDown(Keys.Space))
-                        SwitchGameState(State.Menu);
+                        ChangeGameState(State.Menu);
                     break;
 
                 case State.Instructions:
                     if (keyboardState.IsKeyDown(Keys.Space))
-                        SwitchGameState(State.Menu);
+                        ChangeGameState(State.Menu);
                     break;
 
                 default:
-                    SwitchGameState(State.Menu);
+                    ChangeGameState(State.Menu);
                     break;
             }
 
@@ -491,7 +507,7 @@ namespace ShiftWorld
             set { dontUseThisTileIndexY = (value >= 0 && value < map[mapIndex].Height) ? value : 0; }
         }
 
-        private void SwitchGameState(State GameState)
+        private void ChangeGameState(State GameState)
         {
             switch (GameState)
             {
