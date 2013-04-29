@@ -16,7 +16,7 @@
     <XnaProfile>Reach</XnaProfile>
     <XnaCrossPlatformGroupID>98ed7b3d-36d7-4077-a1a1-fb9ebbeda631</XnaCrossPlatformGroupID>
     <XnaOutputType>Game</XnaOutputType>
-    <ApplicationIcon>Game.ico</ApplicationIcon>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
     <Thumbnail>GameThumbnail.png</Thumbnail>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
@@ -95,6 +95,7 @@
     <Content Include="GameThumbnail.png">
       <XnaPlatformSpecific>true</XnaPlatformSpecific>
     </Content>
+    <Content Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ShiftWorldContent\ShiftWorldContent.contentproj">
