@@ -4,18 +4,18 @@
 - Pelaajan hyppäessä pelaajahahmo tippuu maahan realistisessa kaaressa									3/5	16:15 27.4.2013
 - Pelaaja tähtää maailmaa hiirellä: jonkinlainen kursori näkyy hiiren paikassa								2/5	22:59 27.4.2013
 - Pelaaja ampuu sinisen ammuksen vasemmalla ja punaisen oikealle hiiren klikkauksella							5/5	3:57 28.4.2013
-- Sinisen ammuksen osuessa objektiin se pienenee ja punaisen osuessa objekti suurenee							5/5
+- Sinisen ammuksen osuessa objektiin se pienenee ja punaisen osuessa objekti suurenee							5/5	20:04 29.4.2013
 - Jos pelaaja osuu liian korkeaan objektiin pelaaja kuolee										4/5	18:14 27.4.2013
 - Pelaajan tippuessa rotkoon pelaaja kuolee												5/5	18:14 27.4.2013
 - Pelaajan kuollessa kyseinen kenttä alkaa alusta											4/5	5:46 28.4.2013
 - Hiiren osuessa vasempaan ylänurkkaan vaalea MENU teksti ilmestyy									2/5
 	- Klikkaamalla MENU:a pelaaja pääsee alkuvalikkoon										2/5
-- Alkuvalikossa on START GAME, CREDITS ja EXIT GAME											4/5
+- Alkuvalikossa on START GAME, CREDITS ja EXIT GAME											4/5	20:04 29.4.2013
 	- START GAME jälkeen tulee LEVEL SELECTION menu, jossa voi valita kentän jota pelata						2/5
-		- Pelaajan läpäistäessä kentän kenttä vaihtuu järjestyksessä seuraavaan							5/5
+		- Pelaajan läpäistäessä kentän kenttä vaihtuu järjestyksessä seuraavaan							5/5	20:04 29.4.2013
 		- Pelaaja voi valita ainoastaan kentän, jonka hän on jo läpäissyt							1/5
-	- CREDITS ruudussa lukee tekijöiden nimet ja roolit ja siinä on BACK TO MENU nappula, joka vie takaisin alkuvalikkoon		3/5
-	- EXIT GAME sulkee ohjelman													3/5
+	- CREDITS ruudussa lukee tekijöiden nimet ja roolit ja siinä on BACK TO MENU nappula, joka vie takaisin alkuvalikkoon		3/5	20:05 29.4.2013
+	- EXIT GAME sulkee ohjelman													3/5	20:05 29.4.2013
 
 
 

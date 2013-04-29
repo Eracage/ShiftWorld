@@ -66,7 +66,7 @@ namespace ShiftWorld
                 new Rectangle((int)(_position.X - _texture.Width * _delayedSize / 8f), (int)(_position.Y - _texture.Height * _delayedSize / 4f), (int)(_texture.Width * _delayedSize / 4f), (int)(_texture.Height * _delayedSize/4f)), 
                 null, Color.White, 0, 
                 Vector2.Zero, 
-                SpriteEffects.None, 0.0f);
+                SpriteEffects.None, 0.1f);
         }
     }
 }

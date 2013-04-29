@@ -57,8 +57,11 @@ namespace ShiftWorld
             if (_inAir)
             {
                 _inAir = false;
-                _animator.ChangeAnimation(9, 16, 10, 10f);
-                _animator.AnimationTransition(5, 5, 3, 15);
+                if (_alive)
+                {
+                    _animator.ChangeAnimation(9, 16, 10, 10f);
+                    _animator.AnimationTransition(5, 5, 3, 15);
+                }
             }
         }
 
@@ -70,6 +73,11 @@ namespace ShiftWorld
                 _animator.AnimationTransition(20, 20, 4, 6);
                 _alive = false;
             }
+        }
+
+        public void Fall()
+        {
+            _alive = false;
         }
 
         public void Reset()

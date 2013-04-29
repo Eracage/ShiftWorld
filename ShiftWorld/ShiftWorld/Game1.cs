@@ -230,7 +230,7 @@ namespace ShiftWorld
                     Beam(gameTime, RmousePosition);
 
                     dyingCountDown -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-                    if (player.HP() < 0 || player.Position.Y > (map[mapIndex].Height * map[mapIndex].TileHeight - player.Height))
+                    if (player.HP() < 0)
                     {
                         player.Die();
                         if (!killed && dyingCountDown < -1000)
@@ -239,6 +239,16 @@ namespace ShiftWorld
                             dyingCountDown = 2000;
                         }
                     }
+                    if (player.Position.Y > (map[mapIndex].Height * map[mapIndex].TileHeight - player.Height))
+                    {
+                        player.Fall();
+                        if (!killed && dyingCountDown < -1000)
+                        {
+                            killed = true;
+                            dyingCountDown = 1400;
+                        }
+                    }
+
                     if (dyingCountDown < 0 && killed)
                     {
                         Reset();
@@ -613,6 +623,7 @@ namespace ShiftWorld
 
             player.Reset();
             particleController.Reset();
+            mist._position = Vector2.Zero;
 
             objectController.Reset();
             SetMapobjects();

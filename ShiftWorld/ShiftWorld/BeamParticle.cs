@@ -39,16 +39,16 @@ namespace ShiftWorld
         {
             if (_minimalism)
             {
-                _color.X = 0.2f; //Red
-                _color.Y = 1.0f; //Green
-                _color.Z = 0.2f; //Blue
+                _color.X = 0.35f; //Red
+                _color.Y = 0.13f; //Green
+                _color.Z = 0.13f; //Blue
                 _color.W = 1.0f; //Alpha
             }
             else
             {
-                _color.X = 0.2f; //Red
-                _color.Y = 0.2f; //Green
-                _color.Z = 1.0f; //Blue
+                _color.X = 0.94f; //Red
+                _color.Y = 0.23f; //Green
+                _color.Z = 0.23f; //Blue
                 _color.W = 1.0f; //Alpha
             }
             _scale = (1 - (_life / _startingLife)) * 10;

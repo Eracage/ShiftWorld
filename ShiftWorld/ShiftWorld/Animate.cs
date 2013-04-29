@@ -18,12 +18,12 @@ namespace ShiftWorld
     class Animate
     {
         public Texture2D texture;
-        Vector2 scale;
         int frames;
         int width;
         int height;
         float fps;
 
+        float scale;
         float depth;
         float timer = 0;
         int currentFrame = 0;
@@ -37,9 +37,9 @@ namespace ShiftWorld
         int memFrames;
         float memFPS;
 
-        public Animate(Texture2D Texture, int Frames, int FrameWidth, int FrameHeight, float FPS, int FirstFrame = 1, float Depth = 0.0f)
+        public Animate(Texture2D Texture, int Frames, int FrameWidth, int FrameHeight, float FPS, int FirstFrame = 1, float Depth = 0.0f, float Scale = 1.0f)
         {
-            //scale = Scale;
+            scale = Scale;
             depth = Depth;
             texture = Texture;
             frames = Frames;
@@ -103,7 +103,7 @@ namespace ShiftWorld
             var currentFrameX = (currentFrame % (texture.Width / width)) * width;
             var currentFrameY = (int)((Math.Floor((double)currentFrame / ((double)texture.Width / (double)width))) * height);
 
-            SB.Draw(texture, Position, new Rectangle(currentFrameX, currentFrameY, width, height), Color.White, 0f, Vector2.Zero, 1, SpriteEffects.None, depth); // ,0f, new Vector2(width/2, height/2), SpriteEffects.None, 0f);
+            SB.Draw(texture, Position, new Rectangle(currentFrameX, currentFrameY, width, height), Color.White, 0f, Vector2.Zero, scale, SpriteEffects.None, depth); // ,0f, new Vector2(width/2, height/2), SpriteEffects.None, 0f);
         }
     }
 }
