@@ -59,7 +59,7 @@ namespace ShiftWorld
         ParticleController particleController;
         Rectangle mapView;
         public List<Map> map;
-        int mapIndex = 1;
+        int mapIndex = 0;
         Camera2d camera = new Camera2d();
         Vector2 cameraPos;
         Vector2 eyesPos = new Vector2(170, 80);
@@ -79,6 +79,7 @@ namespace ShiftWorld
         Texture2D titlescreen;
         Texture2D instructions;
         Texture2D credits;
+        Texture2D fog;
         Texture2D background_level1_1;
         Texture2D background_level1_2;
         List<Texture2D> background_level2 = new List<Texture2D>();
@@ -134,6 +135,7 @@ namespace ShiftWorld
             titlescreen = Content.Load<Texture2D>("Textures/title");
             credits = Content.Load<Texture2D>("Textures/credits screen");
             instructions = Content.Load<Texture2D>("Textures/instructions");
+            fog = Content.Load<Texture2D>("Textures/fog");
 
             background_level1_1 = Content.Load<Texture2D>("Textures/kenttä1_1");
             background_level1_2 = Content.Load<Texture2D>("Textures/kenttä1_2");
@@ -193,8 +195,8 @@ namespace ShiftWorld
 
                 if (mapIndex > map.Count - 1)
                 {
-                    ChangeGameState(State.Menu);
                     mapIndex = map.Count - 1;
+                    ChangeGameState(State.Menu);
                 }
                 else
                 {
@@ -331,6 +333,8 @@ namespace ShiftWorld
                             spriteBatch.Draw(background_level1_2, new Vector2(2047/0.6f, 0), null, Color.White, 0.0f, Vector2.Zero, 1 / 0.6f, SpriteEffects.None, 1.0f);
                             break;
 	                }
+
+                    spriteBatch.Draw(fog, new Vector2((map[mapIndex].Width * map[mapIndex].TileWidth) - 384 / 0.6f, 0), null, Color.White, 0.0f, Vector2.Zero, 1 / 0.6f, SpriteEffects.None, 0.0001f);
 
                     
                     DrawMapLayers(spriteBatch, mapIndex);
