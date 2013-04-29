@@ -403,13 +403,13 @@ namespace ShiftWorld
             }
         }
 
-        private void Beam(GameTime gameTime, Vector2 RMousePosition)
+        private void Beam(GameTime gameTime, Vector2 MousePosition)
         {
             beamCooldown += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
 
             if (beamCooldown > 500)
             {
-                Vector2 direction = RMousePosition - player.Position;
+                Vector2 direction = MousePosition - player.Position - eyesPos;
                 direction.Normalize();
                 if (mouseState.LeftButton == ButtonState.Pressed)
                 {
@@ -556,6 +556,7 @@ namespace ShiftWorld
             {
                 case State.Menu:
                     player.Position = new Vector2(width * camera.Zoom / 2 - 116, height / 2);
+                    mapIndex = 0;
                     Game = State.Menu;
                     break;
 
