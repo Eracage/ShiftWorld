@@ -84,7 +84,7 @@ namespace ShiftWorld
             _velocity = Vector2.Zero;
 
             _animator.ChangeAnimation(9, 9, 10, 10f);
-            _position = new Vector2(640, 640);
+            _position = new Vector2(160/0.6f, 640);
         }
 
         // Getters setters

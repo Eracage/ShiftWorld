@@ -33,10 +33,10 @@ namespace ShiftWorld
         {
             if (minimalise)
 	        {
-                _size /= 2;
-                if (_size<1)
+                _size = _size/2.0f;
+                if (_size<2)
 	            {
-                    _size=1;
+                    _size=2;
 	            }
 	        }
             else
@@ -51,7 +51,7 @@ namespace ShiftWorld
 
         public void Update(GameTime gameTime)
         {
-            _delayedSize += (_size - _delayedSize)*((float)gameTime.ElapsedGameTime.TotalMilliseconds/2000) ;
+            _delayedSize += (_size - _delayedSize)*((float)gameTime.ElapsedGameTime.TotalMilliseconds/500) ;
         }
 
         public Rectangle Bounds()
