@@ -144,7 +144,6 @@ namespace ShiftWorld
             map = new List<Map>();
             map.Add(Content.Load<Map>("Maps/testing_map"));
             map.Add(Content.Load<Map>("Maps/level2"));
-            map.Add(Content.Load<Map>("Maps/testing_map"));
 
             Reset();
             ChangeGameState(State.Menu);
