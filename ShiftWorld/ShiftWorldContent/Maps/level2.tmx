@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="64" height="10" tilewidth="128" tileheight="128">
+<map version="1.0" orientation="orthogonal" width="60" height="10" tilewidth="128" tileheight="128">
  <tileset firstgid="1" name="tiles_spritesheet" tilewidth="128" tileheight="128" spacing="2" margin="1">
   <image source="tiles_spritesheet.png" width="1040" height="260"/>
  </tileset>
- <layer name="Tile Layer 1" width="64" height="10">
+ <layer name="Tile Layer 1" width="60" height="10">
   <data encoding="base64" compression="zlib">
-   eJztks0OgCAMg8GAP4n6/o/rOCxB0g1dDF7W5LsYWtdBCC6Xy+WyaiJWIhr9O7F9N84td+4wQjyH1DETSfExtZ93zkTgO4ilA9qJdhdop9L5dg7Usaj0P0FWbmaV/Civ11uj/k/7tlG21uvtuSR8/6v/k2xrf/ROR/e/AH08BBw=
+   eJztks0KgDAMgzfZ/AH1/R/XeijMkBUduosNfJfRZM1YCC6Xy/UfDcIsxEb/KizvrXPJHYEe0ntrnbKQDJ9S+vWNlUh8mzAB2N/ai+1gzeO9rNOps+9OsjLsWvOzPOxpUebiX2VZVo+nc6ly3qvvnazWvuzffd33ANueA5Q=
   </data>
  </layer>
- <objectgroup name="Object Layer 1" width="64" height="10">
+ <objectgroup name="Object Layer 1" width="60" height="10">
   <object name="BarrelL" x="1920" y="896"/>
   <object name="BarrelM" x="4064" y="1152" width="40" height="42"/>
   <object name="BarrelL" x="6016" y="768"/>
-  <object x="6187" y="1313"/>
  </objectgroup>
 </map>
