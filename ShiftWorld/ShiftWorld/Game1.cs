@@ -59,7 +59,7 @@ namespace ShiftWorld
         ParticleController particleController;
         Rectangle mapView;
         public List<Map> map;
-        int mapIndex = 1;
+        int mapIndex = 0;
         Camera2d camera = new Camera2d();
         Vector2 cameraPos;
         Vector2 eyesPos = new Vector2(170, 80);
