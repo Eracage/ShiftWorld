@@ -49,7 +49,7 @@ namespace ShiftWorld
         ObjectController objectController;
         ParticleController particleController;
         Rectangle mapView;
-        List<Map> map;
+        public List<Map> map;
         int mapIndex = 0;
         Camera2d camera = new Camera2d();
         Vector2 cameraPos;
@@ -66,9 +66,12 @@ namespace ShiftWorld
         Player player;
         Butterfly butterfly;
         Mist mist;
+
         Texture2D titlescreen;
         Texture2D instructions;
         Texture2D credits;
+        Texture2D background_level1_1;
+        Texture2D background_level1_2;
 
         // Hitbox Variables
         Rectangle playerRectangle = Rectangle.Empty;
@@ -122,15 +125,20 @@ namespace ShiftWorld
             credits = Content.Load<Texture2D>("Textures/credits screen");
             instructions = Content.Load<Texture2D>("Textures/instructions");
 
+            background_level1_1 = Content.Load<Texture2D>("Textures/kenttä1_1");
+            background_level1_2 = Content.Load<Texture2D>("Textures/kenttä1_2");
+
 
 
             objectController = new ObjectController(Content.Load<Texture2D>("Textures/BARREL"));
             particleController = new ParticleController(Content.Load<Texture2D>("Textures/Particle"), Content.Load<Texture2D>("Textures/sumu"));
             map = new List<Map>();
             map.Add(Content.Load<Map>("Maps/testing_map"));
+            map.Add(Content.Load<Map>("Maps/testing_map"));
+            map.Add(Content.Load<Map>("Maps/testing_map"));
 
             Reset();
-            SwitchGameState(State.Menu);
+            ChangeGameState(State.Menu);
         }
 
         /// <summary>
@@ -166,6 +174,20 @@ namespace ShiftWorld
 
             particleController.UpdateMouse(gameTime, cameraDelta, RmousePosition);
 
+            if (player.Position.X > map[mapIndex].Width * map[mapIndex].TileWidth - player.Height)
+            {
+                mapIndex++;
+
+                if (mapIndex > map.Count - 1)
+                {
+                    ChangeGameState(State.Menu);
+                    mapIndex = map.Count - 1;
+                }
+                else
+                {
+                    Reset();
+                }
+            }
 
 
             switch (Game)
@@ -173,11 +195,11 @@ namespace ShiftWorld
                 case State.Menu:
                     
                     if (StartGame.Contains(mouseState.X, mouseState.Y) && mouseState.LeftButton == ButtonState.Pressed)
-                        SwitchGameState(State.Play);
+                        ChangeGameState(State.Play);
                     if (Instructions.Contains(mouseState.X, mouseState.Y) && mouseState.LeftButton == ButtonState.Pressed)
-                        SwitchGameState(State.Instructions);
+                        ChangeGameState(State.Instructions);
                     if (Credits.Contains(mouseState.X, mouseState.Y) && mouseState.LeftButton == ButtonState.Pressed)
-                        SwitchGameState(State.Credits);
+                        ChangeGameState(State.Credits);
                     if (ExitGame.Contains(mouseState.X, mouseState.Y) && mouseState.LeftButton == ButtonState.Pressed)
                         Exit();
 
@@ -217,16 +239,16 @@ namespace ShiftWorld
 
                 case State.Credits:
                     if (keyboardState.IsKeyDown(Keys.Space))
-                        SwitchGameState(State.Menu);
+                        ChangeGameState(State.Menu);
                     break;
 
                 case State.Instructions:
                     if (keyboardState.IsKeyDown(Keys.Space))
-                        SwitchGameState(State.Menu);
+                        ChangeGameState(State.Menu);
                     break;
 
                 default:
-                    SwitchGameState(State.Menu);
+                    ChangeGameState(State.Menu);
                     break;
             }
 
@@ -268,12 +290,16 @@ namespace ShiftWorld
 
                 case State.Play:
 
+                    spriteBatch.Draw(background_level1_1, new Vector2(0,0), null, Color.White, 0.0f, Vector2.Zero, 1 / 0.6f, SpriteEffects.None, 1.0f);
+                    spriteBatch.Draw(background_level1_2, new Vector2(2047/0.6f, 0), null, Color.White, 0.0f, Vector2.Zero, 1 / 0.6f, SpriteEffects.None, 1.0f);
+                    
                     DrawMapLayers(spriteBatch, mapIndex);
                     player.Draw(spriteBatch);
                     butterfly.Draw(spriteBatch);
                     mist.Draw(spriteBatch);
                     objectController.Draw(spriteBatch);
                     particleController.Draw(spriteBatch);
+                    
 
                     break;
 
@@ -503,7 +529,7 @@ namespace ShiftWorld
             set { dontUseThisTileIndexY = (value >= 0 && value < map[mapIndex].Height) ? value : 0; }
         }
 
-        private void SwitchGameState(State GameState)
+        private void ChangeGameState(State GameState)
         {
             switch (GameState)
             {
