@@ -23,15 +23,21 @@ namespace ShiftWorld
         public ObjectController(Texture2D barrelTexture)
         {
             _barrelTexture = barrelTexture;
-
-            RZObjects.Add(new Object(_barrelTexture, new Vector2(800, 800)));
         }
 
-        public void AddObject(int type, Vector2 position)
+        public void AddObject(int type, Vector2 position, float size)
         {
             if (type == 1)
             {
-                RZObjects.Add(new Object(_barrelTexture, position));
+                RZObjects.Add(new Object(_barrelTexture, position, size));
+            }
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            foreach (var o in RZObjects)
+            {
+                o.Update(gameTime);
             }
         }
 

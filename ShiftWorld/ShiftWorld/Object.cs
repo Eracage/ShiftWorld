@@ -19,33 +19,53 @@ namespace ShiftWorld
     {
         Texture2D _texture;
         Vector2 _position;
-        float _sizeX = 4.0f;
-        float _sizeY = 4.0f;
+        float _size;
+        float _delayedSize;
 
-        public Object(Texture2D texture, Vector2 position)
+        public Object(Texture2D texture, Vector2 position, float size)
         {
             _texture = texture;
             _position = position;
+            _delayedSize = _size = size;
+        }
+
+        public void ChangeSize(bool minimalise)
+        {
+            if (minimalise)
+	        {
+                _size /= 2;
+                if (_size<1)
+	            {
+                    _size=1;
+	            }
+	        }
+            else
+            {
+                _size *= 2;
+                if (_size > 4)
+                {
+                    _size = 4;
+                }
+            }
         }
 
         public void Update(GameTime gameTime)
-        { }
-
-        public virtual void ChangeSize(bool minimalise)
         {
+            _delayedSize += (_size - _delayedSize)*((float)gameTime.ElapsedGameTime.TotalMilliseconds/2000) ;
         }
 
         public Rectangle Bounds()
         {
-            return new Rectangle((int)(_position.X - _texture.Width * _sizeX / 8), (int)(_position.Y - _texture.Height * _sizeY / 8), (int)(_texture.Width*_sizeX/4), (int)(_texture.Height*_sizeY/4));
+            return new Rectangle((int)(_position.X - _texture.Width * _delayedSize / 8f), (int)(_position.Y - _texture.Height * _delayedSize / 4f), (int)(_texture.Width*_delayedSize/4f), (int)(_texture.Height*_delayedSize/4f));
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_texture, 
-                new Rectangle((int)(0), (int)(0), (int)(_texture.Width * _sizeX / 4), (int)(_texture.Height * _sizeY / 4)), 
+
+            spriteBatch.Draw(_texture,
+                new Rectangle((int)(_position.X - _texture.Width * _delayedSize / 8f), (int)(_position.Y - _texture.Height * _delayedSize / 4f), (int)(_texture.Width * _delayedSize / 4f), (int)(_texture.Height * _delayedSize/4f)), 
                 null, Color.White, 0, 
-                new Vector2(_texture.Width * _sizeX / 8, _texture.Height * _sizeY / 4) - _position, 
+                Vector2.Zero, 
                 SpriteEffects.None, 0.0f);
         }
     }

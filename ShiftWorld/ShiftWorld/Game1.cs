@@ -15,6 +15,12 @@ using System.Text;
 
 namespace ShiftWorld
 {
+    enum Size
+    {
+        Small = 1,
+        Medium = 2,
+        Large = 4
+    }
     /// <summary>
     /// This is the main type for your game
     /// </summary>
@@ -63,6 +69,13 @@ namespace ShiftWorld
         Texture2D titlescreen;
         Texture2D instructions;
         Texture2D credits;
+
+        // Hitbox Variables
+        Rectangle playerRectangle = Rectangle.Empty;
+        Vector2 PTL;
+        Vector2 PTR;
+        Vector2 PBL;
+        Vector2 PBR;
 
         public Game1()
         {
@@ -383,6 +396,12 @@ namespace ShiftWorld
             float midWidht = (rightBox + leftBox) / 2 - widthDif;
             float midHeight = (botBox + topBox) / 2 - heightDif;
 
+            playerRectangle = new Rectangle((int)(player.Position.X + leftBox), (int)(player.Position.Y + topBox), (int)(rightBox - leftBox), (int)(botBox - topBox));
+            PTL = new Vector2(    playerRectangle.X,                          playerRectangle.Y);
+            PBL = new Vector2(    playerRectangle.X,                          playerRectangle.Y + playerRectangle.Height);
+            PTR = new Vector2(   playerRectangle.X + playerRectangle.Width,  playerRectangle.Y);
+            PBR = new Vector2(   playerRectangle.X + playerRectangle.Width,  playerRectangle.Y + playerRectangle.Height);
+
             for (int i = 0; i < 3; i++)
             {
                 TileIndexX = (int)(player.Position.X + midWidht + widthDif * i) / map[mapIndex].TileWidth;
@@ -438,34 +457,37 @@ namespace ShiftWorld
                 }
             }
 
-            Rectangle playerRectangle = new Rectangle((int)(player.Position.X + leftBox), (int)(player.Position.Y + topBox), (int)(rightBox-leftBox), (int)(botBox-topBox));
-
             foreach (var o in objectController.RZObjects)
 	        {
                 if (o.Bounds().Intersects(playerRectangle))
                 {
-                    float leftDif = playerRectangle.Right - o.Bounds().Left;
-                    float rightDif = playerRectangle.Left - o.Bounds().Right;
-                    float topDif = playerRectangle.Bottom - o.Bounds().Top;
-                    float bottomDif = playerRectangle.Top - o.Bounds().Bottom;
-
-                    Vector2 diffVector = new Vector2(playerRectangle.Center.X - o.Bounds().Center.X, playerRectangle.Center.Y - o.Bounds().Center.Y);
-
-                    if (0 < topDif && topDif < 40) // Top
-                    {
-                        if (player.Velocity.Y > 0)
-                        {
-                            player.Position = new Vector2(player.Position.X, o.Bounds().Top - botBox);
-                            player.Land();
-                        }
-                    }
-                    else if (0 < leftDif && leftDif < 20) // Left
-                    {
-                        player.Position = new Vector2(o.Bounds().Left - rightBox, player.Position.Y);
-                        player.HP((float)-gameTime.ElapsedGameTime.TotalMilliseconds);
-                    }
+                    HitboxMoveplayer(o.Bounds(),gameTime);
                 }
 	        }
+        }
+
+        private void HitboxMoveplayer(Rectangle StaticObject, GameTime gameTime)
+        {
+            Vector2 OTL = new Vector2(  StaticObject.X,                         StaticObject.Y);
+            Vector2 OBL = new Vector2(  StaticObject.X,                         StaticObject.Y + StaticObject.Height);
+            Vector2 OTR = new Vector2(  StaticObject.X + StaticObject.Width,    StaticObject.Y);
+            Vector2 OBR = new Vector2(  StaticObject.X + StaticObject.Width,    StaticObject.Y + StaticObject.Height);
+
+            Vector2 BR_TL = OTL - PBR;
+
+            if (BR_TL.X > BR_TL.Y) // Right side hitting
+            {
+                player.Position = new Vector2(StaticObject.Location.X + player.Position.X - PBR.X, player.Position.Y);
+                player.HP((float)-gameTime.ElapsedGameTime.TotalMilliseconds);
+            }
+            else // Bottom hitting
+            {
+                if (player.Velocity.Y > 0)
+                {
+                    player.Position = new Vector2(player.Position.X, StaticObject.Location.Y + player.Position.Y - PBR.Y + 4);
+                    player.Land();
+                }
+            }
         }
 
 
@@ -522,7 +544,7 @@ namespace ShiftWorld
                 {
                     if (o.Name == "Barrel")
                     {
-                        objectController.AddObject(1, new Vector2(o.Bounds.X, o.Bounds.Y));
+                        objectController.AddObject(1, new Vector2(o.Bounds.X, o.Bounds.Y) ,(float)Size.Large);
                     }
                 }
             }
